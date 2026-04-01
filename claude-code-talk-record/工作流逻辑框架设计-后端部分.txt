@@ -1,0 +1,2698 @@
+╭─── Claude Code v2.1.79 ──────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                    Welcome back!                   │ started                 │
+│                                                    │ √ Run /init to create … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ Recent activity         │
+│                        ▘▘ ▝▝                       │ No recent activity      │
+│                                                    │                         │
+│              glm-5 · API Usage Billing             │                         │
+│   ~\Desktop\workspace\ai-application-test-backend  │                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+✻ Conversation compacted (ctrl+o for history)
+
+
+> /compact                                                                      
+  ⎿  Compacted (ctrl+o to see full summary)
+
+> 开始实施1阶段开发任务                                                         
+
+● 好的，开始实施 Phase 1 基础层更新。让我先了解项目现有结构。
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● 让我查看现有的实体类和枚举类结构。
+
+  Read 1 file (ctrl+o to expand)
+
+● 让我查看现有的枚举类和Mapper XML。
+
+  Read 1 file (ctrl+o to expand)
+
+● 让我查看更多Mapper文件，然后开始实施。
+
+  Read 1 file (ctrl+o to expand)
+
+● 现在我了解了项目结构。开始实施 Phase 1 基础层更新。
+
+● 开始创建新枚举类。
+
+● Write(src\main\java\com\example\demo\workflow\entity\ErrorStrategy.java)
+  ⎿  Wrote 29 lines to
+     src\main\java\com\example\demo\workflow\entity\ErrorStrategy.java
+     package com.example.demo.workflow.entity;
+
+     /**
+      * 错误处理策略枚举
+      *
+      * @author AI Test Platform Team
+      * @version 1.0.0
+      */
+     public enum ErrorStrategy {
+         /**
+     … +19 lines (ctrl+o to expand)
+
+● 开始更新实体类。
+
+● Update(src\main\java\com\example\demo\workflow\entity\WorkflowEntity.java)
+  ⎿  Added 24 lines
+      70      @TableLogic                                                
+      71      @TableField("deleted")                                     
+      72      private Boolean deleted;                                   
+      73 +                                                               
+      74 +    /**                                                        
+      75 +     * 触发类型：MANUAL/SCHEDULE/API                           
+      76 +     */                                                        
+      77 +    @TableField("trigger_type")                                
+      78 +    private String triggerType;                                
+      79 +                                                               
+      80 +    /**                                                        
+      81 +     * 触发配置（JSON格式）                                    
+      82 +     */                                                        
+      83 +    @TableField("trigger_config")                              
+      84 +    private String triggerConfig;                              
+      85 +                                                               
+      86 +    /**                                                        
+      87 +     * 发布时间                                                
+      88 +     */                                                        
+      89 +    @TableField("published_at")                                
+      90 +    private java.time.LocalDateTime publishedAt;               
+      91 +                                                               
+      92 +    /**                                                        
+      93 +     * 发布人                                                  
+      94 +     */                                                        
+      95 +    @TableField("published_by")                                
+      96 +    private String publishedBy;                                
+      97  }                                                              
+
+● Update(src\main\java\com\example\demo\workflow\entity\WorkflowNodeEntity.java)
+  ⎿  Added 124 lines
+      101      @TableField("parent_node_id")                             
+      102      private Long parentNodeId;                                
+      103                                                                
+      104 +    // ========== Skill引用 ==========                        
+      105 +                                                              
+      106      /**                                                       
+      107 +     * 引用的Skill ID                                         
+      108 +     */                                                       
+      109 +    @TableField("skill_id")                                   
+      110 +    private String skillId;                                   
+      111 +                                                              
+      112 +    /**                                                       
+      113 +     * Skill快照（JSON格式）                                  
+      114 +     */                                                       
+      115 +    @TableField("skill_snapshot")                             
+      116 +    private String skillSnapshot;                             
+      117 +                                                              
+      118 +    // ========== 参数配置 ==========                         
+      119 +                                                              
+      120 +    /**                                                       
+      121 +     * 输入参数定义（JSON格式）                               
+      122 +     */                                                       
+      123 +    @TableField("input_params")                               
+      124 +    private String inputParams;                               
+      125 +                                                              
+      126 +    /**                                                       
+      127 +     * 输出参数定义（JSON格式）                               
+      128 +     */                                                       
+      129 +    @TableField("output_params")                              
+      130 +    private String outputParams;                              
+      131 +                                                              
+      132 +    // ========== 执行配置 ==========                         
+      133 +                                                              
+      134 +    /**                                                       
+      135 +     * 执行位置：CLIENT/SERVICE                               
+      136 +     */                                                       
+      137 +    @TableField("execution_location")                         
+      138 +    private String executionLocation;                         
+      139 +                                                              
+      140 +    /**                                                       
+      141 +     * 错误策略：STOP/SKIP/RETRY/ERROR_BRANCH                 
+      142 +     */                                                       
+      143 +    @TableField("error_strategy")                             
+      144 +    private String errorStrategy;                             
+      145 +                                                              
+      146 +    /**                                                       
+      147 +     * 重试次数                                               
+      148 +     */                                                       
+      149 +    @TableField("retry_count")                                
+      150 +    private Integer retryCount;                               
+      151 +                                                              
+      152 +    /**                                                       
+      153 +     * 重试间隔（毫秒）                                       
+      154 +     */                                                       
+      155 +    @TableField("retry_interval")                             
+      156 +    private Integer retryInterval;                            
+      157 +                                                              
+      158 +    /**                                                       
+      159 +     * 错误处理分支节点ID                                     
+      160 +     */                                                       
+      161 +    @TableField("error_branch_id")                            
+      162 +    private Long errorBranchId;                               
+      163 +                                                              
+      164 +    // ========== 条件节点配置 ==========                     
+      165 +                                                              
+      166 +    /**                                                       
+      167 +     * 条件类型：SIMPLE/MULTI                                 
+      168 +     */                                                       
+      169 +    @TableField("condition_type")                             
+      170 +    private String conditionType;                             
+      171 +                                                              
+      172 +    /**                                                       
+      173 +     * 条件配置（JSON格式）                                   
+      174 +     */                                                       
+      175 +    @TableField("conditions")                                 
+      176 +    private String conditions;                                
+      177 +                                                              
+      178 +    // ========== 循环节点配置 ==========                     
+      179 +                                                              
+      180 +    /**                                                       
+      181 +     * 循环类型：COUNT/ARRAY/CONDITION                        
+      182 +     */                                                       
+      183 +    @TableField("loop_type")                                  
+      184 +    private String loopType;                                  
+      185 +                                                              
+      186 +    /**                                                       
+      187 +     * 循环配置（JSON格式）                                   
+      188 +     */                                                       
+      189 +    @TableField("loop_config")                                
+      190 +    private String loopConfig;                                
+      191 +                                                              
+      192 +    // ========== 批处理/异步/收集配置 ==========             
+      193 +                                                              
+      194 +    /**                                                       
+      195 +     * 批处理配置（JSON格式）                                 
+      196 +     */                                                       
+      197 +    @TableField("batch_config")                               
+      198 +    private String batchConfig;                               
+      199 +                                                              
+      200 +    /**                                                       
+      201 +     * 异步处理配置（JSON格式）                               
+      202 +     */                                                       
+      203 +    @TableField("async_config")                               
+      204 +    private String asyncConfig;                               
+      205 +                                                              
+      206 +    /**                                                       
+      207 +     * 结果收集配置（JSON格式）                               
+      208 +     */                                                       
+      209 +    @TableField("collect_config")                             
+      210 +    private String collectConfig;                             
+      211 +                                                              
+      212 +    // ========== 兼容性状态 ==========                       
+      213 +                                                              
+      214 +    /**                                                       
+      215 +     *                                                        
+          +兼容性状态：COMPATIBLE/NEEDS_UPDATE/INCOMPATIBLE/INVALID      
+      216 +     */                                                       
+      217 +    @TableField("compatibility_status")                       
+      218 +    private String compatibilityStatus;                       
+      219 +                                                              
+      220 +    /**                                                       
+      221 +     * 节点分类：BASIC/LOGIC/EXECUTION                        
+      222 +     */                                                       
+      223 +    @TableField("node_category")                              
+      224 +    private String nodeCategory;                              
+      225 +                                                              
+      226 +    // ========== 时间字段 ==========                         
+      227 +                                                              
+      228 +    /**                                                       
+      229       * 创建时间                                               
+      230       */                                                       
+      231      @TableField(value = "created_at", fill =                  
+           FieldFill.INSERT)                                             
+
+● Update(src\main\java\com\example\demo\workflow\entity\WorkflowConnectionEntity
+        .java)
+  ⎿  Added 12 lines
+      79      private String label;                                      
+      80                                                                 
+      81      /**                                                        
+      82 +     * 分支标签（true/false/case1/case2/default）              
+      83 +     */                                                        
+      84 +    @TableField("branch_label")                                
+      85 +    private String branchLabel;                                
+      86 +                                                               
+      87 +    /**                                                        
+      88 +     * 分支优先级                                              
+      89 +     */                                                        
+      90 +    @TableField("branch_priority")                             
+      91 +    private Integer branchPriority;                            
+      92 +                                                               
+      93 +    /**                                                        
+      94       * 创建时间                                                
+      95       */                                                        
+      96      @TableField(value = "created_at", fill = FieldFill.INSERT) 
+
+● Update(src\main\java\com\example\demo\workflow\entity\WorkflowAssociationEntit
+        y.java)
+  ⎿  Added 16 lines, removed 4 lines
+      31      private Long workflowId;                                   
+      32                                                                 
+      33      /**                                                        
+      34 -     * 循环节点ID                                              
+      34 +     * 容器节点ID（原loop_node_id）                            
+      35       */                                                        
+      36 -    @TableField("loop_node_id")                                
+      37 -    private Long loopNodeId;                                   
+      36 +    @TableField("container_node_id")                           
+      37 +    private Long containerNodeId;                              
+      38                                                                 
+      39      /**                                                        
+      40 -     * 循环体节点ID                                            
+      40 +     * 容器节点UUID                                            
+      41       */                                                        
+      42 +    @TableField("container_node_uuid")                         
+      43 +    private String containerNodeUuid;                          
+      44 +                                                               
+      45 +    /**                                                        
+      46 +     * 子节点ID（原body_node_id）                              
+      47 +     */                                                        
+      48      @TableField("body_node_id")                                
+      49      private Long bodyNodeId;                                   
+      50                                                                 
+      51      /**                                                        
+      52 +     * 子节点UUID                                              
+      53 +     */                                                        
+      54 +    @TableField("body_node_uuid")                              
+      55 +    private String bodyNodeUuid;                               
+      56 +                                                               
+      57 +    /**                                                        
+      58       * 关联类型                                                
+      59       */                                                        
+      60      @TableField("association_type")                            
+
+● 让我查看现有的DTO类。
+
+  Read 1 file (ctrl+o to expand)
+
+● 让我查看其他现有DTO类。
+
+  Read 1 file (ctrl+o to expand)
+
+● 现在开始更新和创建DTO类。先更新现有的DTO。
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowCreateRequest.java)
+  ⎿  Added 10 lines
+      31      @Schema(description = "创建人", example = "admin")         
+      32      private String createdBy;                                  
+      33                                                                 
+      34 +    @Size(max = 50, message = "分类长度不能超过50")            
+      35 +    @Schema(description = "工作流分类", example = "测试")      
+      36 +    private String category;                                   
+      37 +                                                               
+      38 +    @Schema(description = "触发类型", example = "MANUAL")      
+      39 +    private String triggerType;                                
+      40 +                                                               
+      41 +    @Schema(description = "触发配置（JSON格式）", example =    
+         +"{}")                                                          
+      42 +    private String triggerConfig;                              
+      43 +                                                               
+      44      @Valid                                                     
+      45      @Schema(description = "节点列表")                          
+      46      private List<NodeData> nodes = new ArrayList<>();          
+
+● 开始更新DTO类。首先更新 WorkflowCreateRequest。
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowCreateRequest.java)
+  ⎿  Error editing file
+
+  Read 1 file (ctrl+o to expand)
+
+● WorkflowCreateRequest 已有部分新字段，让我更新 NodeData 和
+  ConnectionData，并更新 AssociationData。
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowCreateRequest.java)
+  ⎿  Added 57 lines
+       93                                                                
+       94          @Schema(description =                                 
+           "父节点UUID（用于循环体内节点）", example = "node-loop")      
+       95          private String parentNodeUuid;                        
+       96 +                                                              
+       97 +        // ========== Skill引用 ==========                    
+       98 +                                                              
+       99 +        @Schema(description = "引用的Skill ID")               
+      100 +        private String skillId;                               
+      101 +                                                              
+      102 +        @Schema(description = "Skill快照（JSON格式）")        
+      103 +        private String skillSnapshot;                         
+      104 +                                                              
+      105 +        // ========== 执行配置 ==========                     
+      106 +                                                              
+      107 +        @Schema(description = "执行位置：CLIENT/SERVICE",     
+          +example = "SERVICE")                                          
+      108 +        private String executionLocation;                     
+      109 +                                                              
+      110 +        @Schema(description =                                 
+          +"错误策略：STOP/SKIP/RETRY/ERROR_BRANCH", example = "STOP")   
+      111 +        private String errorStrategy;                         
+      112 +                                                              
+      113 +        @Schema(description = "重试次数", example = "3")      
+      114 +        private Integer retryCount;                           
+      115 +                                                              
+      116 +        @Schema(description = "重试间隔（毫秒）", example =   
+          +"1000")                                                       
+      117 +        private Integer retryInterval;                        
+      118 +                                                              
+      119 +        @Schema(description = "错误处理分支节点UUID")         
+      120 +        private String errorBranchNodeUuid;                   
+      121 +                                                              
+      122 +        // ========== 条件节点配置 ==========                 
+      123 +                                                              
+      124 +        @Schema(description = "条件类型：SIMPLE/MULTI",       
+          +example = "SIMPLE")                                           
+      125 +        private String conditionType;                         
+      126 +                                                              
+      127 +        @Schema(description = "条件配置（JSON格式）")         
+      128 +        private String conditions;                            
+      129 +                                                              
+      130 +        // ========== 循环节点配置 ==========                 
+      131 +                                                              
+      132 +        @Schema(description =                                 
+          +"循环类型：COUNT/ARRAY/CONDITION", example = "COUNT")         
+      133 +        private String loopType;                              
+      134 +                                                              
+      135 +        @Schema(description = "循环配置（JSON格式）")         
+      136 +        private String loopConfig;                            
+      137 +                                                              
+      138 +        // ========== 批处理/异步/收集配置 ==========         
+      139 +                                                              
+      140 +        @Schema(description = "批处理配置（JSON格式）")       
+      141 +        private String batchConfig;                           
+      142 +                                                              
+      143 +        @Schema(description = "异步处理配置（JSON格式）")     
+      144 +        private String asyncConfig;                           
+      145 +                                                              
+      146 +        @Schema(description = "结果收集配置（JSON格式）")     
+      147 +        private String collectConfig;                         
+      148 +                                                              
+      149 +        // ========== 节点分类 ==========                     
+      150 +                                                              
+      151 +        @Schema(description =                                 
+          +"节点分类：BASIC/LOGIC/EXECUTION", example = "BASIC")         
+      152 +        private String nodeCategory;                          
+      153      }                                                         
+      154                                                                
+      155      /**                                                       
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowCreateRequest.java)
+  ⎿  Added 6 lines
+      185                                                                
+      186          @Schema(description = "连线标签")                     
+      187          private String label;                                 
+      188 +                                                              
+      189 +        @Schema(description =                                 
+          +"分支标签（true/false/case1/case2/default）", example =       
+          +"true")                                                       
+      190 +        private String branchLabel;                           
+      191 +                                                              
+      192 +        @Schema(description = "分支优先级", example = "1")    
+      193 +        private Integer branchPriority;                       
+      194      }                                                         
+      195                                                                
+      196      /**                                                       
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowCreateRequest.java)
+  ⎿  Added 8 lines, removed 8 lines
+      194      }                                                         
+      195                                                                
+      196      /**                                                       
+      197 -     * 关联数据（循环与循环体关系）                           
+      197 +     * 关联数据（容器与子节点关系）                           
+      198       */                                                       
+      199      @Data                                                     
+      200      @Schema(description = "关联数据")                         
+      201      public static class AssociationData {                     
+      202 -        @NotBlank(message = "循环节点UUID不能为空")           
+      203 -        @Schema(description = "循环节点UUID                   
+          -", example = "node-loop")                                     
+      204 -        private String loopNodeUuid;                          
+      202 +        @NotBlank(message = "容器节点UUID不能为空")           
+      203 +        @Schema(description = "容器节点UUID（循环节点         
+          +/批处理节点/异步节点）", example = "node-loop")               
+      204 +        private String containerNodeUuid;                     
+      205                                                                
+      206 -        @NotBlank(message = "循环体节点UUID不能为空")         
+      207 -        @Schema(description = "循环体节点UUID                 
+          -", example = "node-loop-body")                                
+      206 +        @NotBlank(message = "子节点UUID不能为空")             
+      207 +        @Schema(description = "子节点UUID                     
+          +（循环体/批处理体/异步体）", example = "node-loop-body")      
+      208          private String bodyNodeUuid;                          
+      209                                                                
+      210 -        @Schema(description = "关联类型", example = "LOOP")   
+      211 -        private String associationType = "LOOP";              
+      210 +        @Schema(description = "关联类型                       
+          +：LOOP_BODY/BATCH_BODY/ASYNC_BODY", example = "LOOP_BODY")    
+      211 +        private String associationType = "LOOP_BODY";         
+      212      }                                                         
+      213  }                                                             
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowUpdateRequest.java)
+  ⎿  Added 10 lines
+      22      @Schema(description = "工作流描述", example =              
+          "用于测试AI文本生成能力的工作流")                              
+      23      private String description;                                
+      24                                                                 
+      25 +    @Size(max = 50, message = "分类长度不能超过50")            
+      26 +    @Schema(description = "工作流分类", example = "测试")      
+      27 +    private String category;                                   
+      28 +                                                               
+      29 +    @Schema(description = "触发类型", example = "MANUAL")      
+      30 +    private String triggerType;                                
+      31 +                                                               
+      32 +    @Schema(description = "触发配置（JSON格式）", example =    
+         +"{}")                                                          
+      33 +    private String triggerConfig;                              
+      34 +                                                               
+      35      @Schema(description = "更新人", example = "admin")         
+      36      private String updatedBy;                                  
+      37  }                                                              
+
+● 现在更新 WorkflowResponse。
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowResponse.java)
+  ⎿  Added 12 lines
+      38      @Schema(description = "状态")                              
+      39      private WorkflowStatus status;                             
+      40                                                                 
+      41 +    @Schema(description = "触发类型")                          
+      42 +    private String triggerType;                                
+      43 +                                                               
+      44 +    @Schema(description = "触发配置")                          
+      45 +    private String triggerConfig;                              
+      46 +                                                               
+      47 +    @Schema(description = "发布时间")                          
+      48 +    private LocalDateTime publishedAt;                         
+      49 +                                                               
+      50 +    @Schema(description = "发布人")                            
+      51 +    private String publishedBy;                                
+      52 +                                                               
+      53      @Schema(description = "创建人")                            
+      54      private String createdBy;                                  
+      55                                                                 
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowResponse.java)
+  ⎿  Added 63 lines
+      112                                                                
+      113          @Schema(description = "父节点ID")                     
+      114          private Long parentNodeId;                            
+      115 +                                                              
+      116 +        @Schema(description = "父节点UUID")                   
+      117 +        private String parentNodeUuid;                        
+      118 +                                                              
+      119 +        // ========== Skill引用 ==========                    
+      120 +                                                              
+      121 +        @Schema(description = "引用的Skill ID")               
+      122 +        private String skillId;                               
+      123 +                                                              
+      124 +        @Schema(description = "Skill快照（JSON格式）")        
+      125 +        private String skillSnapshot;                         
+      126 +                                                              
+      127 +        // ========== 执行配置 ==========                     
+      128 +                                                              
+      129 +        @Schema(description = "执行位置")                     
+      130 +        private String executionLocation;                     
+      131 +                                                              
+      132 +        @Schema(description = "错误策略")                     
+      133 +        private String errorStrategy;                         
+      134 +                                                              
+      135 +        @Schema(description = "重试次数")                     
+      136 +        private Integer retryCount;                           
+      137 +                                                              
+      138 +        @Schema(description = "重试间隔（毫秒）")             
+      139 +        private Integer retryInterval;                        
+      140 +                                                              
+      141 +        @Schema(description = "错误分支节点ID")               
+      142 +        private Long errorBranchId;                           
+      143 +                                                              
+      144 +        // ========== 条件节点配置 ==========                 
+      145 +                                                              
+      146 +        @Schema(description = "条件类型")                     
+      147 +        private String conditionType;                         
+      148 +                                                              
+      149 +        @Schema(description = "条件配置（JSON格式）")         
+      150 +        private String conditions;                            
+      151 +                                                              
+      152 +        // ========== 循环节点配置 ==========                 
+      153 +                                                              
+      154 +        @Schema(description = "循环类型")                     
+      155 +        private String loopType;                              
+      156 +                                                              
+      157 +        @Schema(description = "循环配置（JSON格式）")         
+      158 +        private String loopConfig;                            
+      159 +                                                              
+      160 +        // ========== 批处理/异步/收集配置 ==========         
+      161 +                                                              
+      162 +        @Schema(description = "批处理配置（JSON格式）")       
+      163 +        private String batchConfig;                           
+      164 +                                                              
+      165 +        @Schema(description = "异步处理配置（JSON格式）")     
+      166 +        private String asyncConfig;                           
+      167 +                                                              
+      168 +        @Schema(description = "结果收集配置（JSON格式）")     
+      169 +        private String collectConfig;                         
+      170 +                                                              
+      171 +        // ========== 兼容性状态 ==========                   
+      172 +                                                              
+      173 +        @Schema(description = "兼容性状态")                   
+      174 +        private String compatibilityStatus;                   
+      175 +                                                              
+      176 +        @Schema(description = "节点分类")                     
+      177 +        private String nodeCategory;                          
+      178      }                                                         
+      179                                                                
+      180      /**                                                       
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowResponse.java)
+  ⎿  Added 6 lines
+      215                                                                
+      216          @Schema(description = "标签")                         
+      217          private String label;                                 
+      218 +                                                              
+      219 +        @Schema(description = "分支标签")                     
+      220 +        private String branchLabel;                           
+      221 +                                                              
+      222 +        @Schema(description = "分支优先级")                   
+      223 +        private Integer branchPriority;                       
+      224      }                                                         
+      225                                                                
+      226      /**                                                       
+
+● Update(src\main\java\com\example\demo\workflow\dto\WorkflowResponse.java)
+  ⎿  Added 8 lines, removed 8 lines
+      232          @Schema(description = "关联ID")                       
+      233          private Long id;                                      
+      234                                                                
+      235 -        @Schema(description = "循环节点ID（数据库ID）")       
+      236 -        private Long loopNodeId;                              
+      235 +        @Schema(description = "容器节点ID（数据库ID）")       
+      236 +        private Long containerNodeId;                         
+      237                                                                
+      238 -        @Schema(description = "循环体节点ID（数据库ID）")     
+      238 +        @Schema(description = "容器节点UUID（前端使用）")     
+      239 +        private String containerNodeUuid;                     
+      240 +                                                              
+      241 +        @Schema(description = "子节点ID（数据库ID）")         
+      242          private Long bodyNodeId;                              
+      243                                                                
+      244 -        @Schema(description = "循环节点UUID（前端使用）")     
+      245 -        private String loopNodeUuid;                          
+      246 -                                                              
+      247 -        @Schema(description = "循环体节点UUID（前端使用）")   
+      244 +        @Schema(description = "子节点UUID（前端使用）")       
+      245          private String bodyNodeUuid;                          
+      246                                                                
+      247 -        @Schema(description = "关联类型")                     
+      247 +        @Schema(description = "关联类型                       
+          +：LOOP_BODY/BATCH_BODY/ASYNC_BODY")                           
+      248          private String associationType;                       
+      249      }                                                         
+      250  }                                                             
+
+● 现在创建新的DTO类。
+
+● Write(src\main\java\com\example\demo\workflow\dto\AssociationResponse.java)
+  ⎿  Wrote 32 lines to
+     src\main\java\com\example\demo\workflow\dto\AssociationResponse.java
+     package com.example.demo.workflow.dto;
+
+     import io.swagger.v3.oas.annotations.media.Schema;
+     import lombok.Data;
+
+     import java.time.LocalDateTime;
+
+     /**
+      * 关联响应DTO
+      *
+     … +22 lines (ctrl+o to expand)
+
+● 现在更新 Mapper XML 文件。
+
+● Update(src\main\resources\mapper\workflow\WorkflowMapper.xml)
+  ⎿  Added 5 lines
+      11          <result column="has_run" property="hasRun"/>           
+      12          <result column="version" property="version"/>          
+      13          <result column="status" property="status"/>            
+      14 +        <result column="trigger_type" property="triggerType"/> 
+      15 +        <result column="trigger_config"                        
+         +property="triggerConfig"/>                                     
+      16 +        <result column="published_at" property="publishedAt"/> 
+      17 +        <result column="published_by" property="publishedBy"/> 
+      18          <result column="created_by" property="createdBy"/>     
+      19          <result column="created_at" property="createdAt"/>     
+      20          <result column="updated_by" property="updatedBy"/>     
+     ...
+      21      <!-- 通用查询结果列 -->                                    
+      22      <sql id="Base_Column_List">                                
+      23          id, name, description, published, has_run, version,    
+          status,                                                        
+      24 +        trigger_type, trigger_config, published_at,            
+         +published_by,                                                  
+      25          created_by, created_at, updated_by, updated_at,        
+          deleted                                                        
+      26      </sql>                                                     
+      27                                                                 
+
+● Update(src\main\resources\mapper\workflow\WorkflowNodeMapper.xml)
+  ⎿  Added 29 lines, removed 1 line
+      18          <result column="output_params"                         
+          property="outputParams"/>                                      
+      19          <result column="config" property="config"/>            
+      20          <result column="parent_node_id"                        
+          property="parentNodeId"/>                                      
+      21 +        <!-- Skill引用 -->                                     
+      22 +        <result column="skill_id" property="skillId"/>         
+      23 +        <result column="skill_snapshot"                        
+         +property="skillSnapshot"/>                                     
+      24 +        <!-- 执行配置 -->                                      
+      25 +        <result column="execution_location"                    
+         +property="executionLocation"/>                                 
+      26 +        <result column="error_strategy"                        
+         +property="errorStrategy"/>                                     
+      27 +        <result column="retry_count" property="retryCount"/>   
+      28 +        <result column="retry_interval"                        
+         +property="retryInterval"/>                                     
+      29 +        <result column="error_branch_id"                       
+         +property="errorBranchId"/>                                     
+      30 +        <!-- 条件节点配置 -->                                  
+      31 +        <result column="condition_type"                        
+         +property="conditionType"/>                                     
+      32 +        <result column="conditions" property="conditions"/>    
+      33 +        <!-- 循环节点配置 -->                                  
+      34 +        <result column="loop_type" property="loopType"/>       
+      35 +        <result column="loop_config" property="loopConfig"/>   
+      36 +        <!-- 批处理/异步/收集配置 -->                          
+      37 +        <result column="batch_config" property="batchConfig"/> 
+      38 +        <result column="async_config" property="asyncConfig"/> 
+      39 +        <result column="collect_config"                        
+         +property="collectConfig"/>                                     
+      40 +        <!-- 兼容性状态 -->                                    
+      41 +        <result column="compatibility_status"                  
+         +property="compatibilityStatus"/>                               
+      42 +        <result column="node_category"                         
+         +property="nodeCategory"/>                                      
+      43 +        <!-- 时间字段 -->                                      
+      44          <result column="created_at" property="createdAt"/>     
+      45          <result column="updated_at" property="updatedAt"/>     
+      46      </resultMap>                                               
+     ...
+      26      <sql id="Base_Column_List">                                
+      27          id, workflow_id, node_uuid, type, type_id, name,       
+          position_x, position_y,                                        
+      28          input_ports, output_ports, input_params,               
+          output_params, config,                                         
+      29 -        parent_node_id, created_at, updated_at                 
+      29 +        parent_node_id, skill_id, skill_snapshot,              
+      30 +        execution_location, error_strategy, retry_count,       
+         +retry_interval, error_branch_id,                               
+      31 +        condition_type, conditions, loop_type, loop_config,    
+      32 +        batch_config, async_config, collect_config,            
+      33 +        compatibility_status, node_category,                   
+      34 +        created_at, updated_at                                 
+      35      </sql>                                                     
+      36                                                                 
+      37      <!-- 根据工作流ID查询所有节点 -->                          
+
+● Update(src\main\resources\mapper\workflow\WorkflowConnectionMapper.xml)
+  ⎿  Added 3 lines, removed 1 line
+      14          <result column="source_param_index"                    
+          property="sourceParamIndex"/>                                  
+      15          <result column="target_param_index"                    
+          property="targetParamIndex"/>                                  
+      16          <result column="label" property="label"/>              
+      17 +        <result column="branch_label" property="branchLabel"/> 
+      18 +        <result column="branch_priority"                       
+         +property="branchPriority"/>                                    
+      19          <result column="created_at" property="createdAt"/>     
+      20      </resultMap>                                               
+      21                                                                 
+     ...
+      21      <sql id="Base_Column_List">                                
+      22          id, workflow_id, connection_uuid, source_node_id,      
+          source_port_id,                                                
+      23          target_node_id, target_port_id, source_param_index,    
+          target_param_index,                                            
+      24 -        label, created_at                                      
+      24 +        label, branch_label, branch_priority, created_at       
+      25      </sql>                                                     
+      26                                                                 
+      27      <!-- 根据工作流ID查询所有连线 -->                          
+
+● Update(src\main\resources\mapper\workflow\WorkflowAssociationMapper.xml)
+  ⎿  Added 5 lines, removed 2 lines
+       6      <resultMap id="BaseResultMap" type="com.example.demo.workf 
+          low.entity.WorkflowAssociationEntity">                         
+       7          <id column="id" property="id"/>                        
+       8          <result column="workflow_id" property="workflowId"/>   
+       9 -        <result column="loop_node_id" property="loopNodeId"/>  
+       9 +        <result column="container_node_id"                     
+         +property="containerNodeId"/>                                   
+      10 +        <result column="container_node_uuid"                   
+         +property="containerNodeUuid"/>                                 
+      11          <result column="body_node_id" property="bodyNodeId"/>  
+      12 +        <result column="body_node_uuid"                        
+         +property="bodyNodeUuid"/>                                      
+      13          <result column="association_type"                      
+          property="associationType"/>                                   
+      14          <result column="created_at" property="createdAt"/>     
+      15      </resultMap>                                               
+      16                                                                 
+      17      <!-- 通用查询结果列 -->                                    
+      18      <sql id="Base_Column_List">                                
+      19 -        id, workflow_id, loop_node_id, body_node_id,           
+         -association_type, created_at                                   
+      19 +        id, workflow_id, container_node_id,                    
+         +container_node_uuid,                                           
+      20 +        body_node_id, body_node_uuid, association_type,        
+         +created_at                                                     
+      21      </sql>                                                     
+      22                                                                 
+      23      <!-- 根据工作流ID查询所有关联 -->                          
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\resources\mapper\workflow\WorkflowNodeMapper.xml)
+  ⎿  Error editing file
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\resources\mapper\workflow\WorkflowNodeMapper.xml)
+  ⎿  Added 20 lines
+      108          WHERE workflow_id = #{workflowId}                     
+      109      </select>                                                 
+      110                                                                
+      111 +    <!-- 根据Skill ID查询所有引用该Skill的节点 -->            
+      112 +    <select id="selectBySkillId" resultMap="BaseResultMap">   
+      113 +        SELECT                                                
+      114 +        <include refid="Base_Column_List"/>                   
+      115 +        FROM workflow_node                                    
+      116 +        WHERE skill_id = #{skillId}                           
+      117 +        ORDER BY created_at DESC                              
+      118 +    </select>                                                 
+      119 +                                                              
+      120 +    <!-- 批量更新节点兼容性状态 -->                           
+      121 +    <update id="batchUpdateCompatibilityStatus">              
+      122 +        UPDATE workflow_node                                  
+      123 +        SET compatibility_status = #{status},                 
+      124 +            updated_at = NOW()                                
+      125 +        WHERE id IN                                           
+      126 +        <foreach collection="nodeIds" item="nodeId" open="("  
+          +separator="," close=")">                                      
+      127 +            #{nodeId}                                         
+      128 +        </foreach>                                            
+      129 +    </update>                                                 
+      130 +                                                              
+      131  </mapper>                                                     
+
+● 现在更新 Mapper 接口添加新方法。
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\mapper\WorkflowNodeMapper.java)
+  ⎿  Added 17 lines
+      72       * @return 节点数量                                        
+      73       */                                                        
+      74      Long countByWorkflowId(@Param("workflowId") Long           
+          workflowId);                                                   
+      75 +                                                               
+      76 +    /**                                                        
+      77 +     * 根据Skill ID查询所有引用该Skill的节点                   
+      78 +     *                                                         
+      79 +     * @param skillId Skill ID                                 
+      80 +     * @return 节点列表                                        
+      81 +     */                                                        
+      82 +    List<WorkflowNodeEntity> selectBySkillId(@Param("skillId") 
+         + String skillId);                                              
+      83 +                                                               
+      84 +    /**                                                        
+      85 +     * 批量更新节点兼容性状态                                  
+      86 +     *                                                         
+      87 +     * @param nodeIds 节点ID列表                               
+      88 +     * @param status  兼容性状态                               
+      89 +     * @return 更新数量                                        
+      90 +     */                                                        
+      91 +    int batchUpdateCompatibilityStatus(@Param("nodeIds")       
+         +List<Long> nodeIds, @Param("status") String status);           
+      92  }                                                              
+
+● Phase 1 任务完成，验证编译。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -50)
+  ⎿  [ERROR] COMPILATION ERROR :
+     [ERROR] /C:/Users/Administrator/Desktop/workspace/ai-application-test-
+     backend/src/main/java/com/example/demo/workflow/entity/WorkflowNodeEnt
+     … +65 lines (ctrl+o to expand)
+
+● 有编译错误，让我修复。
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\entity\WorkflowNodeEntity.java)
+  ⎿  Removed 14 lines
+      115      @TableField("skill_snapshot")                             
+      116      private String skillSnapshot;                             
+      117                                                                
+      118 -    // ========== 参数配置 ==========                         
+      119 -                                                              
+      120 -    /**                                                       
+      121 -     * 输入参数定义（JSON格式）                               
+      122 -     */                                                       
+      123 -    @TableField("input_params")                               
+      124 -    private String inputParams;                               
+      125 -                                                              
+      126 -    /**                                                       
+      127 -     * 输出参数定义（JSON格式）                               
+      128 -     */                                                       
+      129 -    @TableField("output_params")                              
+      130 -    private String outputParams;                              
+      131 -                                                              
+      118      // ========== 执行配置 ==========                         
+      119                                                                
+      120      /**                                                       
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -30)
+  ⎿  [ERROR] COMPILATION ERROR :
+     [ERROR] /C:/Users/Administrator/Desktop/workspace/ai-application-test-
+     backend/src/main/java/com/example/demo/workflow/service/WorkflowServic
+     … +37 lines (ctrl+o to expand)
+
+● 需要更新 WorkflowServiceImpl.java 中的字段名。
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+
+● 需要更新 WorkflowServiceImpl.java 中的代码以使用新的字段名。
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowServiceImpl.jav
+        a)
+  ⎿  Added 6 lines, removed 6 lines
+      130          // 4. 保存关联数据（循环与循环体关系）                
+      131          if (request.getAssociations() != null &&              
+           !request.getAssociations().isEmpty()) {                       
+      132              for (WorkflowCreateRequest.AssociationData        
+           assocData : request.getAssociations()) {                      
+      133 -                Long loopNodeId                               
+          - = nodeUuidToIdMap.get(assocData.getLoopNodeUuid());          
+      133 +                Long containerNodeId                          
+          + = nodeUuidToIdMap.get(assocData.getContainerNodeUuid());     
+      134                  Long bodyNodeId =                             
+           nodeUuidToIdMap.get(assocData.getBodyNodeUuid());             
+      135                                                                
+      136 -                if (loopNodeId                                
+          - == null || bodyNodeId == null) {                             
+      137 -                    log.warn("关联节点ID映射失败: loopNodeUuid
+          -={}, bodyNodeUuid={}",                                        
+      138 -                            assocData.getLoopNodeUuid         
+          -(), assocData.getBodyNodeUuid());                             
+      136 +                if (containerNodeId                           
+          + == null || bodyNodeId == null) {                             
+      137 +                    log.warn("关联节点ID映射失败:             
+          +containerNodeUuid={}, bodyNodeUuid={}",                       
+      138 +                            assocData.getContainerNodeUuid    
+          +(), assocData.getBodyNodeUuid());                             
+      139                      continue;                                 
+      140                  }                                             
+      141                                                                
+      142                  WorkflowAssociationEntity association = new   
+           WorkflowAssociationEntity();                                  
+      143                  association.setWorkflowId(workflowId);        
+      144 -                association.setLoopNodeId(loopNodeId);        
+      144 +                                                              
+          +association.setContainerNodeId(containerNodeId);              
+      145                  association.setBodyNodeId(bodyNodeId);        
+      146                                                                
+           association.setAssociationType(assocData.getAssociationType() 
+            != null ?                                                    
+      147 -                        assocData.getAssociationType() : "LOOP
+          -");                                                           
+      147 +                        assocData.getAssociationType() : "    
+          +LOOP_BODY");                                                  
+      148                                                                
+      149                  associationMapper.insert(association);        
+      150              }                                                 
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowServiceImpl.jav
+        a)
+  ⎿  Added 6 lines, removed 6 lines
+      381                                                                
+      382          // 保存关联（使用 UUID 到 ID 的映射）                 
+      383          for (WorkflowResponse.AssociationDTO assocDTO :       
+           associations) {                                               
+      384 -            // 使用 loopNodeUuid/bodyNodeUuid 映射到数据库 ID 
+      385 -            Long loopNodeDbId = uuidToIdMap.get(assocDTO.     
+          -getLoopNodeUuid());                                           
+      384 +            // 使用 containerNodeUuid                         
+          +/bodyNodeUuid 映射到数据库 ID                                 
+      385 +            Long containerNodeDbId = uuidToIdMap.get(assocDTO.
+          +getContainerNodeUuid());                                      
+      386              Long bodyNodeDbId =                               
+           uuidToIdMap.get(assocDTO.getBodyNodeUuid());                  
+      387                                                                
+      388 -            if (loopNodeDbId                                  
+          - == null || bodyNodeDbId == null) {                           
+      389 -                log.warn("关联节点ID映射失败: loopNodeUuid    
+          -={}, bodyNodeUuid={}",                                        
+      390 -                        assocDTO.getLoopNodeUuid              
+          -(), assocDTO.getBodyNodeUuid());                              
+      388 +            if (containerNodeDbId                             
+          + == null || bodyNodeDbId == null) {                           
+      389 +                log.warn("关联节点ID映射失败:                 
+          +containerNodeUuid={}, bodyNodeUuid={}",                       
+      390 +                        assocDTO.getContainerNodeUuid         
+          +(), assocDTO.getBodyNodeUuid());                              
+      391                  continue;                                     
+      392              }                                                 
+      393                                                                
+      394              WorkflowAssociationEntity association = new       
+           WorkflowAssociationEntity();                                  
+      395              association.setWorkflowId(id);                    
+      396 -            association.setLoopNodeId(loopNodeDbId);          
+      396 +                                                              
+          +association.setContainerNodeId(containerNodeDbId);            
+      397              association.setBodyNodeId(bodyNodeDbId);          
+      398              association.setAssociationType(assocDTO.getAssoci 
+           ationType());                                                 
+      399              associationMapper.insert(association);            
+
+  Read 2 files (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowServiceImpl.jav
+        a)
+  ⎿  Added 3 lines, removed 3 lines
+      678          // 循环节点(ID=4, UUID="node-loop") 与                
+           循环体节点(ID=8, UUID="node-loop-body") 的关联                
+      679          WorkflowResponse.AssociationDTO association = new     
+           WorkflowResponse.AssociationDTO();                            
+      680          association.setId(1L);                                
+      681 -        association.setLoopNodeId(4L);                        
+      682 -        association.setLoopNodeUuid("node-loop");             
+      681 +        association.setContainerNodeId(4L);                   
+      682 +        association.setContainerNodeUuid("node-loop");        
+      683          association.setBodyNodeId(8L);                        
+      684          association.setBodyNodeUuid("node-loop-body");        
+      685 -        association.setAssociationType("loop-body");          
+      685 +        association.setAssociationType("LOOP_BODY");          
+      686          associations.add(association);                        
+      687                                                                
+      688          return associations;                                  
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowServiceImpl.jav
+        a)
+  ⎿  Added 2 lines, removed 2 lines
+      766      private WorkflowResponse.AssociationDTO                   
+           convertToAssociationDTO(WorkflowAssociationEntity assoc,      
+           Map<Long, String> nodeIdToUuidMap) {                          
+      767          WorkflowResponse.AssociationDTO dto = new             
+           WorkflowResponse.AssociationDTO();                            
+      768          dto.setId(assoc.getId());                             
+      769 -        dto.setLoopNodeId(assoc.getLoopNodeId());             
+      770 -        dto.setLoopNodeUuid(nodeIdToUuidMap.get(assoc.getLoop 
+          -NodeId()));                                                   
+      769 +        dto.setContainerNodeId(assoc.getContainerNodeId());   
+      770 +        dto.setContainerNodeUuid(nodeIdToUuidMap.get(assoc.ge 
+          +tContainerNodeId()));                                         
+      771          dto.setBodyNodeId(assoc.getBodyNodeId());             
+      772          dto.setBodyNodeUuid(nodeIdToUuidMap.get(assoc.getBody 
+           NodeId()));                                                   
+      773          dto.setAssociationType(assoc.getAssociationType());   
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -30)
+  ⎿  (No output)
+
+● 编译成功！Phase 1 基础层更新完成。
+
+● Phase 1 基础层更新完成！
+
+  完成内容总结
+
+  1. 新建枚举类 (4个)
+
+  - NodeCategory.java - 节点分类枚举 (BASIC/LOGIC/EXECUTION)
+  - CompatibilityStatus.java - 兼容性状态枚举
+  (COMPATIBLE/NEEDS_UPDATE/INCOMPATIBLE/INVALID)
+  - ExecutionLocation.java - 执行位置枚举 (CLIENT/SERVICE)
+  - ErrorStrategy.java - 错误处理策略枚举 (STOP/SKIP/RETRY/ERROR_BRANCH)
+
+  2. 更新实体类 (4个)
+
+  - WorkflowEntity - 添加 triggerType, triggerConfig, publishedAt, publishedBy
+  字段
+  - WorkflowNodeEntity - 添加 Skill引用、执行配置、条件配置、循环配置、批处理/异
+  步/收集配置、兼容性状态等字段
+  - WorkflowConnectionEntity - 添加 branchLabel, branchPriority 分支字段
+  - WorkflowAssociationEntity - 将 loopNodeId 改名为 containerNodeId，添加 UUID
+  字段
+
+  3. 更新/新建DTO类 (10个)
+
+  - 更新 WorkflowCreateRequest - 添加 category, triggerType, triggerConfig
+  - 更新 WorkflowUpdateRequest - 添加 triggerType, triggerConfig
+  - 更新 WorkflowResponse - 添加新字段，更新内部DTO类
+  - 新建 NodeUpdateRequest.java
+  - 新建 NodeResponse.java
+  - 新建 ConnectionResponse.java
+  - 新建 ValidationResult.java
+  - 新建 AvailableVariable.java
+  - 新建 AssociationCreateRequest.java
+  - 新建 AssociationResponse.java
+
+  4. 更新Mapper (4个XML + 1个接口)
+
+  - 更新 WorkflowMapper.xml - 添加新字段映射
+  - 更新 WorkflowNodeMapper.xml -
+  添加新字段映射、按SkillId查询、批量更新兼容性状态方法
+  - 更新 WorkflowConnectionMapper.xml - 添加分支字段映射
+  - 更新 WorkflowAssociationMapper.xml - 更新容器节点字段映射
+  - 更新 WorkflowNodeMapper.java - 添加新方法声明
+
+  5. 同步更新服务层
+
+  - 更新 WorkflowServiceImpl.java - 将 loopNode 改为 containerNode
+
+  编译验证通过，可以进入 Phase 2 服务层重构。
+
+✻ Worked for 14m 18s
+
+> 开始实施阶段2开发任务                                                         
+
+● 好的，开始实施 Phase 2 服务层重构。让我先查看实施计划。
+
+  Read 1 file (ctrl+o to expand)
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● 开始创建 WorkflowNodeService。
+
+● Write(src\main\java\com\example\demo\workflow\service\WorkflowNodeService.java
+       )
+  ⎿  Wrote 106 lines to src\main\java\com\example\demo\workflow\service\Wor
+     kflowNodeService.java
+     package com.example.demo.workflow.service;
+
+     import com.example.demo.workflow.dto.NodeCreateRequest;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.NodeUpdateRequest;
+
+     import java.util.List;
+
+     /**
+      * 工作流节点服务接口
+     … +96 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\impl\WorkflowNodeService
+       Impl.java)
+  ⎿  Wrote 314 lines to src\main\java\com\example\demo\workflow\service\imp
+     l\WorkflowNodeServiceImpl.java
+     package com.example.demo.workflow.service.impl;
+
+     import com.example.demo.workflow.dto.NodeCreateRequest;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.NodeUpdateRequest;
+     import com.example.demo.workflow.entity.*;
+     import com.example.demo.workflow.mapper.WorkflowConnectionMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import com.example.demo.workflow.mapper.WorkflowAssociationMapper;
+     import com.example.demo.workflow.service.WorkflowNodeService;
+     … +304 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\WorkflowConnectionServic
+       e.java)
+  ⎿  Wrote 87 lines to src\main\java\com\example\demo\workflow\service\Work
+     flowConnectionService.java
+     package com.example.demo.workflow.service;
+
+     import com.example.demo.workflow.dto.ConnectionResponse;
+     import com.example.demo.workflow.dto.WorkflowResponse;
+
+     import java.util.List;
+
+     /**
+      * 工作流连线服务接口
+      *
+     … +77 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\impl\WorkflowConnectionS
+       erviceImpl.java)
+  ⎿  Wrote 206 lines to src\main\java\com\example\demo\workflow\service\imp
+     l\WorkflowConnectionServiceImpl.java
+     package com.example.demo.workflow.service.impl;
+
+     import com.example.demo.workflow.dto.ConnectionResponse;
+     import com.example.demo.workflow.dto.WorkflowResponse;
+     import com.example.demo.workflow.entity.WorkflowConnectionEntity;
+     import com.example.demo.workflow.mapper.WorkflowConnectionMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import com.example.demo.workflow.service.WorkflowConnectionService;
+     import lombok.RequiredArgsConstructor;
+     import lombok.extern.slf4j.Slf4j;
+     … +196 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\WorkflowAssociationServi
+       ce.java)
+  ⎿  Wrote 89 lines to src\main\java\com\example\demo\workflow\service\Work
+     flowAssociationService.java
+     package com.example.demo.workflow.service;
+
+     import com.example.demo.workflow.dto.AssociationCreateRequest;
+     import com.example.demo.workflow.dto.AssociationResponse;
+
+     import java.util.List;
+
+     /**
+      * 工作流关联服务接口
+      *
+     … +79 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\impl\WorkflowAssociation
+       ServiceImpl.java)
+  ⎿  Wrote 233 lines to src\main\java\com\example\demo\workflow\service\imp
+     l\WorkflowAssociationServiceImpl.java
+     package com.example.demo.workflow.service.impl;
+
+     import com.example.demo.workflow.dto.AssociationCreateRequest;
+     import com.example.demo.workflow.dto.AssociationResponse;
+     import com.example.demo.workflow.entity.AssociationType;
+     import com.example.demo.workflow.entity.WorkflowAssociationEntity;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowAssociationMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import com.example.demo.workflow.service.WorkflowAssociationService;
+     … +223 lines (ctrl+o to expand)
+
+● 更新 WorkflowService 接口。
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowService.java)
+  ⎿  Error editing file
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowService.java)
+  ⎿  Added 8 lines
+      82      WorkflowResponse publishWorkflow(Long id);                 
+      83                                                                 
+      84      /**                                                        
+      85 +     * 取消发布工作流                                          
+      86 +     *                                                         
+      87 +     * @param id 工作流ID                                      
+      88 +     * @return 工作流响应                                      
+      89 +     */                                                        
+      90 +    WorkflowResponse unpublishWorkflow(Long id);               
+      91 +                                                               
+      92 +    /**                                                        
+      93       * 复制工作流                                              
+      94       *                                                         
+      95       * @param id 工作流ID                                      
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\WorkflowServiceImpl.jav
+        a)
+  ⎿  Added 20 lines
+      238                                                                
+      239      @Override                                                 
+      240      @Transactional                                            
+      241 +    public WorkflowResponse unpublishWorkflow(Long id) {      
+      242 +        log.info("取消发布工作流: {}", id);                   
+      243 +                                                              
+      244 +        WorkflowEntity workflow =                             
+          +workflowMapper.selectById(id);                                
+      245 +        if (workflow == null) {                               
+      246 +            throw BusinessException.notFound("工作流", id);   
+      247 +        }                                                     
+      248 +                                                              
+      249 +        // 检查是否有正在执行的任务                           
+      250 +        // TODO: 添加执行中的任务检查                         
+      251 +                                                              
+      252 +        workflow.setPublished(false);                         
+      253 +        workflow.setStatus(WorkflowStatus.DRAFT.name());      
+      254 +        workflowMapper.updateById(workflow);                  
+      255 +                                                              
+      256 +        return convertToResponse(workflow);                   
+      257 +    }                                                         
+      258 +                                                              
+      259 +    @Override                                                 
+      260 +    @Transactional                                            
+      261      public WorkflowResponse copyWorkflow(Long id) {           
+      262          log.info("复制工作流: {}", id);                       
+      263                                                                
+
+● 编译验证。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -50)
+  ⎿  [ERROR] COMPILATION ERROR :
+     [ERROR] /C:/Users/Administrator/Desktop/workspace/ai-application-test-
+     backend/src/main/java/com/example/demo/workflow/service/impl/WorkflowC
+     … +65 lines (ctrl+o to expand)
+
+● 修复编译错误。
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\impl\WorkflowConnection
+        ServiceImpl.java)
+  ⎿  Added 1 line
+      3  import com.example.demo.workflow.dto.ConnectionResponse;        
+      4  import com.example.demo.workflow.dto.WorkflowResponse;          
+      5  import                                                          
+         com.example.demo.workflow.entity.WorkflowConnectionEntity;      
+      6 +import com.example.demo.workflow.entity.WorkflowNodeEntity;     
+      7  import                                                          
+         com.example.demo.workflow.mapper.WorkflowConnectionMapper;      
+      8  import com.example.demo.workflow.mapper.WorkflowNodeMapper;     
+      9  import                                                          
+         com.example.demo.workflow.service.WorkflowConnectionService;    
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\service\impl\WorkflowConnection
+        ServiceImpl.java)
+  ⎿  Error editing file
+
+  Read 2 files (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\mapper\WorkflowConnectionMapper
+        .java)
+  ⎿  Added 16 lines
+      50      int deleteByWorkflowId(@Param("workflowId") Long           
+          workflowId);                                                   
+      51                                                                 
+      52      /**                                                        
+      53 +     * 删除以指定节点为源的所有连线                            
+      54 +     *                                                         
+      55 +     * @param sourceNodeId 源节点ID                            
+      56 +     * @return 删除数量                                        
+      57 +     */                                                        
+      58 +    int deleteBySourceNodeId(@Param("sourceNodeId") Long       
+         +sourceNodeId);                                                 
+      59 +                                                               
+      60 +    /**                                                        
+      61 +     * 删除以指定节点为目标的所有连线                          
+      62 +     *                                                         
+      63 +     * @param targetNodeId 目标节点ID                          
+      64 +     * @return 删除数量                                        
+      65 +     */                                                        
+      66 +    int deleteByTargetNodeId(@Param("targetNodeId") Long       
+         +targetNodeId);                                                 
+      67 +                                                               
+      68 +    /**                                                        
+      69       * 统计工作流的连线数量                                    
+      70       *                                                         
+      71       * @param workflowId 工作流ID                              
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\resources\mapper\workflow\WorkflowConnectionMapper.xml)
+  ⎿  Added 12 lines
+      59          WHERE workflow_id = #{workflowId}                      
+      60      </delete>                                                  
+      61                                                                 
+      62 +    <!-- 删除以指定节点为源的所有连线 -->                      
+      63 +    <delete id="deleteBySourceNodeId">                         
+      64 +        DELETE FROM workflow_connection                        
+      65 +        WHERE source_node_id = #{sourceNodeId}                 
+      66 +    </delete>                                                  
+      67 +                                                               
+      68 +    <!-- 删除以指定节点为目标的所有连线 -->                    
+      69 +    <delete id="deleteByTargetNodeId">                         
+      70 +        DELETE FROM workflow_connection                        
+      71 +        WHERE target_node_id = #{targetNodeId}                 
+      72 +    </delete>                                                  
+      73 +                                                               
+      74      <!-- 统计工作流的连线数量 -->                              
+      75      <select id="countByWorkflowId"                             
+          resultType="java.lang.Long">                                   
+      76          SELECT COUNT(*)                                        
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\entity\AssociationType.java)
+  ⎿  Added 16 lines, removed 1 line
+       8   */                                                            
+       9  public enum AssociationType {                                  
+      10      /**                                                        
+      11 -     * 循环关联                                                
+      11 +     * 循环关联（旧版兼容）                                    
+      12       */                                                        
+      13      LOOP,                                                      
+      14                                                                 
+      15      /**                                                        
+      16 +     * 循环体关联                                              
+      17 +     */                                                        
+      18 +    LOOP_BODY,                                                 
+      19 +                                                               
+      20 +    /**                                                        
+      21 +     * 批处理体关联                                            
+      22 +     */                                                        
+      23 +    BATCH_BODY,                                                
+      24 +                                                               
+      25 +    /**                                                        
+      26 +     * 异步体关联                                              
+      27 +     */                                                        
+      28 +    ASYNC_BODY,                                                
+      29 +                                                               
+      30 +    /**                                                        
+      31       * 条件关联                                                
+      32       */                                                        
+      33      CONDITION                                                  
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -50)
+  ⎿  (No output)
+
+● 编译成功！更新任务状态。
+
+● Phase 2 服务层重构完成！
+
+  完成内容总结
+
+  1. 新建服务接口 (4个)
+
+  - WorkflowNodeService.java - 节点服务接口
+  - WorkflowConnectionService.java - 连线服务接口
+  - WorkflowAssociationService.java - 关联服务接口
+  - 更新 WorkflowService.java - 添加 unpublishWorkflow 方法
+
+  2. 新建服务实现类 (3个)
+
+  - WorkflowNodeServiceImpl.java - 节点服务实现
+    - CRUD 方法：getNodes, getNode, createNode, updateNode, deleteNode
+    - 批量操作：batchCreateNodes, batchUpdateNodes, batchDeleteNodes
+    - 查询方法：getNodesBySkillId, batchUpdateCompatibilityStatus
+  - WorkflowConnectionServiceImpl.java - 连线服务实现
+    - CRUD 方法：getConnections, getConnection, createConnection,
+  deleteConnection
+    - 批量操作：batchCreateConnections, batchDeleteConnections
+    - 查询方法：getConnectionsBySourceNode, getConnectionsByTargetNode
+  - WorkflowAssociationServiceImpl.java - 关联服务实现
+    - CRUD 方法：getAssociations, getAssociation, createAssociation,
+  deleteAssociation
+    - 批量操作：batchCreateAssociations, batchDeleteAssociations
+    - 查询方法：getByContainerNode, getByBodyNode
+
+  3. 更新 WorkflowServiceImpl
+
+  - 添加 unpublishWorkflow 方法实现
+
+  4. 更新枚举类
+
+  - AssociationType.java - 添加 LOOP_BODY, BATCH_BODY, ASYNC_BODY 类型
+
+  5. 更新 Mapper
+
+  - WorkflowConnectionMapper.java - 添加 deleteBySourceNodeId,
+  deleteByTargetNodeId 方法
+  - WorkflowConnectionMapper.xml - 添加对应的 SQL 语句
+
+  服务架构
+
+  WorkflowService           - 工作流 CRUD、发布、取消发布、复制、批量保存
+  WorkflowNodeService       - 节点 CRUD、批量操作、兼容性管理
+  WorkflowConnectionService - 连线 CRUD、批量操作
+  WorkflowAssociationService - 关联 CRUD、批量操作、容器/子节点查询
+
+  编译验证通过，可以进入 Phase 3 控制器层重构。
+
+✻ Cooked for 11m 15s
+
+> 开始实施阶段3开发任务                                                         
+
+● 好的，开始实施 Phase 3 控制器层重构。
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+
+● 更新 WorkflowController，添加 unpublish 接口。
+
+● Update(src\main\java\com\example\demo\workflow\controller\WorkflowController.j
+        ava)
+  ⎿  Added 16 lines
+      196      }                                                         
+      197                                                                
+      198      /**                                                       
+      199 +     * 取消发布工作流                                         
+      200 +     *                                                        
+      201 +     * @param id 工作流ID                                     
+      202 +     * @return 工作流响应                                     
+      203 +     */                                                       
+      204 +    @PostMapping("/{id}/unpublish")                           
+      205 +    @Operation(summary = "取消发布工作流", description =      
+          +"将已发布的工作流恢复为草稿状态")                             
+      206 +    public ResponseEntity<WorkflowResponse>                   
+          +unpublishWorkflow(                                            
+      207 +            @Parameter(description = "工作流ID", required =   
+          +true)                                                         
+      208 +            @PathVariable Long id) {                          
+      209 +        log.info("取消发布工作流: {}", id);                   
+      210 +        WorkflowResponse response =                           
+          +workflowService.unpublishWorkflow(id);                        
+      211 +        return ResponseEntity.ok(response);                   
+      212 +    }                                                         
+      213 +                                                              
+      214 +    /**                                                       
+      215       * 复制工作流                                             
+      216       *                                                        
+      217       * @param id 工作流ID                                     
+
+● Write(src\main\java\com\example\demo\workflow\controller\WorkflowNodeControlle
+       r.java)
+  ⎿  Wrote 196 lines to src\main\java\com\example\demo\workflow\controller\
+     WorkflowNodeController.java
+     package com.example.demo.workflow.controller;
+
+     import com.example.demo.workflow.dto.NodeCreateRequest;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.NodeUpdateRequest;
+     import com.example.demo.workflow.service.WorkflowNodeService;
+     import io.swagger.v3.oas.annotations.Operation;
+     import io.swagger.v3.oas.annotations.Parameter;
+     import io.swagger.v3.oas.annotations.tags.Tag;
+     import jakarta.validation.Valid;
+     … +186 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\controller\WorkflowConnectionCon
+       troller.java)
+  ⎿  Wrote 179 lines to src\main\java\com\example\demo\workflow\controller\
+     WorkflowConnectionController.java
+     package com.example.demo.workflow.controller;
+
+     import com.example.demo.workflow.dto.ConnectionResponse;
+     import com.example.demo.workflow.dto.WorkflowResponse;
+     import com.example.demo.workflow.service.WorkflowConnectionService;
+     import io.swagger.v3.oas.annotations.Operation;
+     import io.swagger.v3.oas.annotations.Parameter;
+     import io.swagger.v3.oas.annotations.tags.Tag;
+     import jakarta.validation.Valid;
+     import lombok.RequiredArgsConstructor;
+     … +169 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\controller\WorkflowValidationCon
+       troller.java)
+  ⎿  Wrote 136 lines to src\main\java\com\example\demo\workflow\controller\
+     WorkflowValidationController.java
+     package com.example.demo.workflow.controller;
+
+     import com.example.demo.workflow.dto.AvailableVariable;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.ValidationResult;
+     import com.example.demo.workflow.service.WorkflowValidationService;
+     import io.swagger.v3.oas.annotations.Operation;
+     import io.swagger.v3.oas.annotations.Parameter;
+     import io.swagger.v3.oas.annotations.tags.Tag;
+     import lombok.RequiredArgsConstructor;
+     … +126 lines (ctrl+o to expand)
+
+● 创建 WorkflowValidationService 接口。
+
+● Write(src\main\java\com\example\demo\workflow\service\WorkflowValidationServic
+       e.java)
+  ⎿  Wrote 61 lines to src\main\java\com\example\demo\workflow\service\Work
+     flowValidationService.java
+     package com.example.demo.workflow.service;
+
+     import com.example.demo.workflow.controller.WorkflowValidationControll
+     er.ReferenceCheckResult;
+     import com.example.demo.workflow.dto.AvailableVariable;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.ValidationResult;
+
+     import java.util.List;
+
+     /**
+     … +51 lines (ctrl+o to expand)
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\impl\WorkflowValidationS
+       erviceImpl.java)
+  ⎿  Wrote 482 lines to src\main\java\com\example\demo\workflow\service\imp
+     l\WorkflowValidationServiceImpl.java
+     package com.example.demo.workflow.service.impl;
+
+     import com.example.demo.workflow.controller.WorkflowValidationControll
+     er.ReferenceCheckResult;
+     import com.example.demo.workflow.dto.AvailableVariable;
+     import com.example.demo.workflow.dto.NodeResponse;
+     import com.example.demo.workflow.dto.ValidationResult;
+     import com.example.demo.workflow.entity.WorkflowConnectionEntity;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowConnectionMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     … +472 lines (ctrl+o to expand)
+
+● 编译验证。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -60)
+  ⎿  (No output)
+
+● Phase 3 控制器层重构完成！
+
+  完成内容总结
+
+  1. 更新 WorkflowController
+
+  - 添加 POST /{id}/unpublish 接口 - 取消发布工作流
+
+  2. 新建 WorkflowNodeController
+
+  路径：/api/workflows/{workflowId}/nodes
+
+  ┌────────┬─────────────────────┬─────────────────┐
+  │  方法  │        路径         │      说明       │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ GET    │ /                   │ 获取节点列表    │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ GET    │ /{nodeUuid}         │ 获取单个节点    │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ POST   │ /                   │ 创建节点        │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ PUT    │ /{nodeUuid}         │ 更新节点        │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ DELETE │ /{nodeUuid}         │ 删除节点        │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ POST   │ /batch              │ 批量创建节点    │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ PUT    │ /batch              │ 批量更新节点    │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ DELETE │ /batch              │ 批量删除节点    │
+  ├────────┼─────────────────────┼─────────────────┤
+  │ GET    │ /by-skill/{skillId} │ 按Skill查询节点 │
+  └────────┴─────────────────────┴─────────────────┘
+
+  3. 新建 WorkflowConnectionController
+
+  路径：/api/workflows/{workflowId}/connections
+
+  ┌────────┬───────────────────┬──────────────┐
+  │  方法  │       路径        │     说明     │
+  ├────────┼───────────────────┼──────────────┤
+  │ GET    │ /                 │ 获取连线列表 │
+  ├────────┼───────────────────┼──────────────┤
+  │ GET    │ /{connectionUuid} │ 获取单个连线 │
+  ├────────┼───────────────────┼──────────────┤
+  │ POST   │ /                 │ 创建连线     │
+  ├────────┼───────────────────┼──────────────┤
+  │ DELETE │ /{connectionUuid} │ 删除连线     │
+  ├────────┼───────────────────┼──────────────┤
+  │ POST   │ /batch            │ 批量创建连线 │
+  ├────────┼───────────────────┼──────────────┤
+  │ DELETE │ /batch            │ 批量删除连线 │
+  ├────────┼───────────────────┼──────────────┤
+  │ GET    │ /source/{nodeId}  │ 获取节点出边 │
+  ├────────┼───────────────────┼──────────────┤
+  │ GET    │ /target/{nodeId}  │ 获取节点入边 │
+  └────────┴───────────────────┴──────────────┘
+
+  4. 新建 WorkflowValidationController
+
+  路径：/api/workflows/{workflowId}
+
+  ┌──────┬─────────────────────────────────┬──────────────┐
+  │ 方法 │              路径               │     说明     │
+  ├──────┼─────────────────────────────────┼──────────────┤
+  │ POST │ /validate                       │ 验证工作流   │
+  ├──────┼─────────────────────────────────┼──────────────┤
+  │ GET  │ /predecessors/{nodeUuid}        │ 获取前置节点 │
+  ├──────┼─────────────────────────────────┼──────────────┤
+  │ GET  │ /available-variables/{nodeUuid} │ 获取可用变量 │
+  ├──────┼─────────────────────────────────┼──────────────┤
+  │ GET  │ /check-reference/{nodeUuid}     │ 检查参数引用 │
+  ├──────┼─────────────────────────────────┼──────────────┤
+  │ GET  │ /execution-order                │ 获取执行顺序 │
+  └──────┴─────────────────────────────────┴──────────────┘
+
+  5. 新建 WorkflowValidationService
+
+  - WorkflowValidationService.java - 接口
+  - WorkflowValidationServiceImpl.java - 实现
+    - 工作流验证（开始/结束节点、孤立节点、参数引用、循环依赖）
+    - 前置节点查询（BFS遍历）
+    - 可用变量获取
+    - 参数引用检查
+    - 拓扑排序（Kahn's算法）
+
+  编译验证通过，可以进入 Phase 4 验证逻辑实现。
+
+✻ Cooked for 9m 17s
+
+> 开始实施阶段4开发任务                                                         
+
+● 好的，开始实施 Phase 4 验证逻辑实现。
+
+  Read 1 file (ctrl+o to expand)
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\dto\ValidationResult.java)
+  ⎿  Added 49 lines
+      26      private List<ValidationWarning> warnings = new             
+          ArrayList<>();                                                 
+      27                                                                 
+      28      /**                                                        
+      29 +     * 添加错误                                                
+      30 +     *                                                         
+      31 +     * @param code     错误代码                                
+      32 +     * @param message  错误消息                                
+      33 +     * @param nodeUuid 关联的节点UUID                          
+      34 +     * @param field    关联的字段                              
+      35 +     */                                                        
+      36 +    public void addError(String code, String message, String   
+         +nodeUuid, String field) {                                      
+      37 +        ValidationError error = new ValidationError();         
+      38 +        error.setCode(code);                                   
+      39 +        error.setMessage(message);                             
+      40 +        error.setNodeUuid(nodeUuid);                           
+      41 +        error.setField(field);                                 
+      42 +        errors.add(error);                                     
+      43 +        this.valid = false;                                    
+      44 +    }                                                          
+      45 +                                                               
+      46 +    /**                                                        
+      47 +     * 添加警告                                                
+      48 +     *                                                         
+      49 +     * @param code     警告代码                                
+      50 +     * @param message  警告消息                                
+      51 +     * @param nodeUuid 关联的节点UUID                          
+      52 +     */                                                        
+      53 +    public void addWarning(String code, String message, String 
+         + nodeUuid) {                                                   
+      54 +        ValidationWarning warning = new ValidationWarning();   
+      55 +        warning.setCode(code);                                 
+      56 +        warning.setMessage(message);                           
+      57 +        warning.setNodeUuid(nodeUuid);                         
+      58 +        warnings.add(warning);                                 
+      59 +    }                                                          
+      60 +                                                               
+      61 +    /**                                                        
+      62 +     * 合并另一个验证结果                                      
+      63 +     *                                                         
+      64 +     * @param other 其他验证结果                               
+      65 +     */                                                        
+      66 +    public void merge(ValidationResult other) {                
+      67 +        if (other == null) {                                   
+      68 +            return;                                            
+      69 +        }                                                      
+      70 +        if (!other.isValid()) {                                
+      71 +            this.valid = false;                                
+      72 +        }                                                      
+      73 +        this.errors.addAll(other.getErrors());                 
+      74 +        this.warnings.addAll(other.getWarnings());             
+      75 +    }                                                          
+      76 +                                                               
+      77 +    /**                                                        
+      78       * 验证错误                                                
+      79       */                                                        
+      80      @Data                                                      
+
+● Bash(mkdir -p "C:\Users\Administrator\Desktop\workspace\ai-application-test-ba
+      ckend\src\main\java\com\example\demo\workflow\service\validation")
+  ⎿  Done
+
+● Write(src\main\java\com\example\demo\workflow\service\validation\StructureVali
+       dator.java)
+  ⎿  Wrote 146 lines to src\main\java\com\example\demo\workflow\service\val
+     idation\StructureValidator.java
+     package com.example.demo.workflow.service.validation;
+
+     import com.example.demo.workflow.dto.ValidationResult;
+     import com.example.demo.workflow.entity.WorkflowConnectionEntity;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowConnectionMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import lombok.RequiredArgsConstructor;
+     import lombok.extern.slf4j.Slf4j;
+     import org.springframework.stereotype.Component;
+     … +136 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\validation\CyclicDepende
+       ncyValidator.java)
+  ⎿  Wrote 241 lines to src\main\java\com\example\demo\workflow\service\val
+     idation\CyclicDependencyValidator.java
+     package com.example.demo.workflow.service.validation;
+
+     import com.example.demo.workflow.dto.ValidationResult;
+     import com.example.demo.workflow.entity.WorkflowConnectionEntity;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowConnectionMapper;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import lombok.RequiredArgsConstructor;
+     import lombok.extern.slf4j.Slf4j;
+     import org.springframework.stereotype.Component;
+     … +231 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\validation\SkillCompatib
+       ilityChecker.java)
+  ⎿  Wrote 229 lines to src\main\java\com\example\demo\workflow\service\val
+     idation\SkillCompatibilityChecker.java
+     package com.example.demo.workflow.service.validation;
+
+     import com.example.demo.workflow.dto.ValidationResult;
+     import com.example.demo.workflow.entity.CompatibilityStatus;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import com.fasterxml.jackson.databind.JsonNode;
+     import com.fasterxml.jackson.databind.ObjectMapper;
+     import lombok.RequiredArgsConstructor;
+     import lombok.extern.slf4j.Slf4j;
+     … +219 lines (ctrl+o to expand)
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\service\impl\WorkflowValidationS
+       erviceImpl.java)
+  ⎿  Added 172 lines, removed 222 lines
+       8  import com.example.demo.workflow.entity.WorkflowNodeEntity;    
+       9  import                                                         
+          com.example.demo.workflow.mapper.WorkflowConnectionMapper;     
+      10  import com.example.demo.workflow.mapper.WorkflowNodeMapper;    
+      11 -import com.example.demo.workflow.service.WorkflowNodeService;  
+      11  import                                                         
+          com.example.demo.workflow.service.WorkflowValidationService;   
+      12 +import com.example.demo.workflow.service.validation.CyclicDepe 
+         +ndencyValidator;                                               
+      13 +import com.example.demo.workflow.service.validation.SkillCompa 
+         +tibilityChecker;                                               
+      14 +import com.example.demo.workflow.service.validation.StructureV 
+         +alidator;                                                      
+      15  import com.fasterxml.jackson.databind.JsonNode;                
+      16  import com.fasterxml.jackson.databind.ObjectMapper;            
+      17  import lombok.RequiredArgsConstructor;                         
+     ...
+      23                                                                 
+      24  /**                                                            
+      25   * 工作流验证服务实现                                          
+      26 + * 协调各个验证器组件进行完整验证                              
+      27   *                                                             
+      28   * @author AI Test Platform Team                               
+      29   * @version 1.0.0                                              
+     ...
+      34                                                                 
+      35      private final WorkflowNodeMapper nodeMapper;               
+      36      private final WorkflowConnectionMapper connectionMapper;   
+      37 -    private final WorkflowNodeService nodeService;             
+      37      private final ObjectMapper objectMapper;                   
+      38                                                                 
+      39 +    // 验证器组件                                              
+      40 +    private final StructureValidator structureValidator;       
+      41 +    private final CyclicDependencyValidator                    
+         +cyclicDependencyValidator;                                     
+      42 +    private final SkillCompatibilityChecker                    
+         +skillCompatibilityChecker;                                     
+      43 +                                                               
+      44      // 参数引用正则表达式：${节点名称.参数名}                  
+      45      private static final Pattern PARAM_REFERENCE_PATTERN =     
+          Pattern.compile("\\$\\{([^}.]+)\\.([^}]+)}");                  
+      46                                                                 
+     ...
+       45          log.info("开始验证工作流: workflowId={}",             
+           workflowId);                                                  
+       46                                                                
+       47          ValidationResult result = new ValidationResult();     
+       48 -        List<ValidationResult.ValidationError> errors = new   
+          -ArrayList<>();                                                
+       49 -        List<ValidationResult.ValidationWarning> warnings =   
+          -new ArrayList<>();                                            
+       48 +        result.setValid(true);                                
+       49                                                                
+       50 -        // 1. 获取所有节点和连线                              
+       50 +        // 1. 结构验证                                        
+       51 +        log.debug("执行结构验证...");                         
+       52 +        ValidationResult structureResult =                    
+          +structureValidator.validate(workflowId);                      
+       53 +        result.merge(structureResult);                        
+       54 +                                                              
+       55 +        // 2. 循环依赖检测                                    
+       56 +        log.debug("执行循环依赖检测...");                     
+       57 +        ValidationResult cycleResult =                        
+          +cyclicDependencyValidator.validate(workflowId);               
+       58 +        result.merge(cycleResult);                            
+       59 +                                                              
+       60 +        // 3. 参数引用验证                                    
+       61 +        log.debug("执行参数引用验证...");                     
+       62 +        ValidationResult paramRefResult =                     
+          +validateParameterReferences(workflowId);                      
+       63 +        result.merge(paramRefResult);                         
+       64 +                                                              
+       65 +        // 4. Skill 兼容性检查                                
+       66 +        log.debug("执行 Skill 兼容性检查...");                
+       67 +        ValidationResult skillResult =                        
+          +skillCompatibilityChecker.check(workflowId);                  
+       68 +        result.merge(skillResult);                            
+       69 +                                                              
+       70 +        log.info("工作流验证完成: workflowId={}, valid={},    
+          +errors={}, warnings={}",                                      
+       71 +                workflowId, result.isValid(),                 
+          +result.getErrors().size(), result.getWarnings().size());      
+       72 +                                                              
+       73 +        return result;                                        
+       74 +    }                                                         
+       75 +                                                              
+       76 +    /**                                                       
+       77 +     * 快速验证（仅结构和循环）                               
+       78 +     */                                                       
+       79 +    public ValidationResult quickValidate(Long workflowId) {  
+       80 +        log.info("快速验证工作流: workflowId={}",             
+          +workflowId);                                                  
+       81 +                                                              
+       82 +        ValidationResult result = new ValidationResult();     
+       83 +        result.setValid(true);                                
+       84 +                                                              
+       85 +                                                              
+          +result.merge(structureValidator.validate(workflowId));        
+       86 +                                                              
+          +result.merge(cyclicDependencyValidator.validate(workflowId)); 
+       87 +                                                              
+       88 +        return result;                                        
+       89 +    }                                                         
+       90 +                                                              
+       91 +    /**                                                       
+       92 +     * 参数引用验证                                           
+       93 +     */                                                       
+       94 +    private ValidationResult validateParameterReferences(Long 
+          + workflowId) {                                                
+       95 +        ValidationResult result = new ValidationResult();     
+       96 +        result.setValid(true);                                
+       97 +                                                              
+       98          List<WorkflowNodeEntity> nodes =                      
+           nodeMapper.selectByWorkflowId(workflowId);                    
+       99          List<WorkflowConnectionEntity> connections =          
+           connectionMapper.selectByWorkflowId(workflowId);              
+      100                                                                
+      101 -        // 2. 检查开始节点                                    
+      102 -        long startNodeCount = nodes.stream()                  
+      103 -                .filter(n -> "start".equals(n.getType()))     
+      104 -                .count();                                     
+      105 -        if (startNodeCount == 0) {                            
+      106 -            errors.add(createError("MISSING_START_NODE",      
+          -"工作流必须包含一个开始节点", null, null));                   
+      107 -        } else if (startNodeCount > 1) {                      
+      108 -            errors.add(createError("MULTIPLE_START_NODES",    
+          -"工作流只能包含一个开始节点", null, null));                   
+      109 -        }                                                     
+      101 +        // 构建节点名称映射                                   
+      102 +        Map<String, WorkflowNodeEntity> nameToNode =          
+          +nodes.stream()                                                
+      103 +                                                              
+          +.collect(Collectors.toMap(WorkflowNodeEntity::getName, n ->   
+          +n, (a, b) -> a));                                             
+      104                                                                
+      105 -        // 3. 检查结束节点                                    
+      106 -        long endNodeCount = nodes.stream()                    
+      107 -                .filter(n -> "end".equals(n.getType()))       
+      108 -                .count();                                     
+      109 -        if (endNodeCount == 0) {                              
+      110 -            errors.add(createError("MISSING_END_NODE",        
+          -"工作流必须包含至少一个结束节点", null, null));               
+      111 -        }                                                     
+      105 +        // 构建前置节点映射                                   
+      106 +        Map<Long, Set<Long>> predecessorsMap =                
+          +buildPredecessorsMap(nodes, connections);                     
+      107                                                                
+      108 -        // 4. 检查孤立节点（没有连线的节点）                  
+      109 -        Set<Long> connectedNodeIds = new HashSet<>();         
+      110 -        for (WorkflowConnectionEntity conn : connections) {   
+      111 -            connectedNodeIds.add(conn.getSourceNodeId());     
+      112 -            connectedNodeIds.add(conn.getTargetNodeId());     
+      113 -        }                                                     
+      108 +        // 遍历每个节点的输入参数                             
+      109          for (WorkflowNodeEntity node : nodes) {               
+      110 -            if (!connectedNodeIds.contains(node.getId()) &&   
+          -!"start".equals(node.getType())) {                            
+      111 -                warnings.add(createWarning("ORPHAN_NODE",     
+      112 -                        "节点 '" + node.getName() + "'        
+          -没有连接到任何其他节点",                                      
+      113 -                        node.getNodeUuid()));                 
+      110 +            String inputParams = node.getInputParams();       
+      111 +            if (inputParams == null || inputParams.isEmpty()) 
+          + {                                                            
+      112 +                continue;                                     
+      113              }                                                 
+      114 -        }                                                     
+      114                                                                
+      115 -        // 5. 检查参数引用                                    
+      116 -        Map<String, WorkflowNodeEntity> nameToNodeMap =       
+          -nodes.stream()                                                
+      117 -                                                              
+          -.collect(Collectors.toMap(WorkflowNodeEntity::getName, n ->   
+          -n, (a, b) -> a));                                             
+      115 +            Set<Long> predecessors =                          
+          +predecessorsMap.getOrDefault(node.getId(),                    
+          +Collections.emptySet());                                      
+      116 +            Set<String> predecessorNames =                    
+          +predecessors.stream()                                         
+      117 +                    .map(id -> nodes.stream()                 
+      118 +                            .filter(n ->                      
+          +n.getId().equals(id))                                         
+      119 +                            .map(WorkflowNodeEntity::getName) 
+      120 +                            .findFirst()                      
+      121 +                            .orElse(""))                      
+      122 +                    .collect(Collectors.toSet());             
+      123                                                                
+      124 -        for (WorkflowNodeEntity node : nodes) {               
+      125 -            validateParameterReferences(node, nameToNodeMap,  
+          -errors, warnings);                                            
+      126 -        }                                                     
+      124 +            // 提取参数引用                                   
+      125 +            Set<String> references =                          
+          +extractParamReferences(inputParams);                          
+      126                                                                
+      127 -        // 6. 检查循环依赖（使用拓扑排序）                    
+      128 -        if (!hasCycle(nodes, connections)) {                  
+      129 -            try {                                             
+      130 -                getExecutionOrder(workflowId);                
+      131 -            } catch (Exception e) {                           
+      132 -                errors.add(createError("CYCLIC_DEPENDENCY",   
+          -"工作流中存在循环依赖", null, null));                         
+      133 -            }                                                 
+      134 -        } else {                                              
+      135 -            errors.add(createError("CYCLIC_DEPENDENCY",       
+          -"工作流中存在循环依赖", null, null));                         
+      136 -        }                                                     
+      127 +            for (String ref : references) {                   
+      128 +                String[] parts = ref.split("\\.");            
+      129 +                if (parts.length < 2) {                       
+      130 +                    result.addError("WF_PARAM_001",           
+          +"参数引用语法错误: " + ref,                                   
+      131 +                            node.getNodeUuid(),               
+          +"inputParams");                                               
+      132 +                    continue;                                 
+      133 +                }                                             
+      134                                                                
+      135 -        result.setValid(errors.isEmpty());                    
+      136 -        result.setErrors(errors);                             
+      137 -        result.setWarnings(warnings);                         
+      135 +                String refNodeName = parts[0];                
+      136 +                String refParamName = parts.length == 2 ?     
+          +parts[1] : parts[2];                                          
+      137                                                                
+      138 -        log.info("工作流验证完成: workflowId={}, valid={},    
+          -errors={}, warnings={}",                                      
+      139 -                workflowId, result.isValid(), errors.size(),  
+          -warnings.size());                                             
+      138 +                // 检查节点是否存在                           
+      139 +                WorkflowNodeEntity refNode =                  
+          +nameToNode.get(refNodeName);                                  
+      140 +                if (refNode == null) {                        
+      141 +                    result.addError("WF_PARAM_002",           
+          +"引用的节点不存在: " + refNodeName,                           
+      142 +                            node.getNodeUuid(),               
+          +"inputParams");                                               
+      143 +                    continue;                                 
+      144 +                }                                             
+      145                                                                
+      146 +                // 检查是否为前置节点                         
+      147 +                if (!predecessorNames.contains(refNodeName))  
+          +{                                                             
+      148 +                    result.addError("WF_PARAM_003",           
+          +"引用的节点 '" + refNodeName + "' 不是前置节点",              
+      149 +                            node.getNodeUuid(),               
+          +"inputParams");                                               
+      150 +                    continue;                                 
+      151 +                }                                             
+      152 +                                                              
+      153 +                // 检查参数是否存在                           
+      154 +                if (!hasOutputParam(refNode, refParamName)) { 
+      155 +                    result.addWarning("WF_PARAM_004",         
+          +"引用的参数可能不存在: " + ref,                               
+      156 +                            node.getNodeUuid());              
+      157 +                }                                             
+      158 +            }                                                 
+      159 +        }                                                     
+      160 +                                                              
+      161          return result;                                        
+      162      }                                                         
+      163                                                                
+     ...
+      120          List<WorkflowNodeEntity> allNodes =                   
+           nodeMapper.selectByWorkflowId(workflowId);                    
+      121          List<WorkflowConnectionEntity> allConnections =       
+           connectionMapper.selectByWorkflowId(workflowId);              
+      122                                                                
+      123 +        // 找到目标节点                                       
+      124 +        WorkflowNodeEntity targetNode = allNodes.stream()     
+      125 +                .filter(n ->                                  
+          +nodeUuid.equals(n.getNodeUuid()))                             
+      126 +                .findFirst()                                  
+      127 +                .orElse(null);                                
+      128 +                                                              
+      129 +        if (targetNode == null) {                             
+      130 +            return List.of();                                 
+      131 +        }                                                     
+      132 +                                                              
+      133          // 构建邻接表（反向）                                 
+      134          Map<Long, List<Long>> reverseAdjList = new            
+           HashMap<>();                                                  
+      135          Map<Long, WorkflowNodeEntity> idToNodeMap = new       
+           HashMap<>();                                                  
+      136 -        Map<String, Long> uuidToIdMap = new HashMap<>();      
+      136                                                                
+      137          for (WorkflowNodeEntity node : allNodes) {            
+      138              idToNodeMap.put(node.getId(), node);              
+      139 -            uuidToIdMap.put(node.getNodeUuid(),               
+          -node.getId());                                                
+      139              reverseAdjList.put(node.getId(), new              
+           ArrayList<>());                                               
+      140          }                                                     
+      141                                                                
+     ...
+      137          }                                                     
+      138                                                                
+      139          // BFS查找所有前置节点                                
+      140 -        Long targetNodeId = uuidToIdMap.get(nodeUuid);        
+      141 -        if (targetNodeId == null) {                           
+      142 -            return List.of();                                 
+      143 -        }                                                     
+      144 -                                                              
+      140          Set<Long> visited = new HashSet<>();                  
+      141          Queue<Long> queue = new LinkedList<>();               
+      142 -        queue.add(targetNodeId);                              
+      143 -        visited.add(targetNodeId);                            
+      142 +        queue.add(targetNode.getId());                        
+      143 +        visited.add(targetNode.getId());                      
+      144                                                                
+      145          List<NodeResponse> predecessors = new ArrayList<>();  
+      146          while (!queue.isEmpty()) {                            
+     ...
+      173          List<AvailableVariable> variables = new               
+           ArrayList<>();                                                
+      174                                                                
+      175          for (NodeResponse predecessor : predecessors) {       
+      176 -            // 解析前置节点的输出参数                         
+      176              if (predecessor.getOutputParams() != null &&      
+           !predecessor.getOutputParams().isEmpty()) {                   
+      177                  try {                                         
+      178                      JsonNode outputParams =                   
+           objectMapper.readTree(predecessor.getOutputParams());         
+     ...
+      238      public List<NodeResponse> getExecutionOrder(Long          
+           workflowId) {                                                 
+      239          log.info("获取执行顺序: workflowId={}", workflowId);  
+      240                                                                
+      241 -        List<WorkflowNodeEntity> nodes =                      
+          -nodeMapper.selectByWorkflowId(workflowId);                    
+      242 -        List<WorkflowConnectionEntity> connections =          
+          -connectionMapper.selectByWorkflowId(workflowId);              
+      241 +        try {                                                 
+      242 +            List<Long> orderIds = cyclicDependencyValidator.g 
+          +etTopologicalOrderByIds(workflowId);                          
+      243 +            List<WorkflowNodeEntity> nodes =                  
+          +nodeMapper.selectByWorkflowId(workflowId);                    
+      244                                                                
+      245 -        // Kahn's 算法进行拓扑排序                            
+      246 -        Map<Long, Integer> inDegree = new HashMap<>();        
+      247 -        Map<Long, List<Long>> adjList = new HashMap<>();      
+      248 -        Map<Long, WorkflowNodeEntity> idToNodeMap = new       
+          -HashMap<>();                                                  
+      245 +            Map<Long, WorkflowNodeEntity> idToNodeMap =       
+          +nodes.stream()                                                
+      246 +                                                              
+          +.collect(Collectors.toMap(WorkflowNodeEntity::getId, n ->     
+          +n));                                                          
+      247                                                                
+      248 -        // 初始化                                             
+      249 -        for (WorkflowNodeEntity node : nodes) {               
+      250 -            inDegree.put(node.getId(), 0);                    
+      251 -            adjList.put(node.getId(), new ArrayList<>());     
+      252 -            idToNodeMap.put(node.getId(), node);              
+      248 +            return orderIds.stream()                          
+      249 +                    .map(idToNodeMap::get)                    
+      250 +                    .filter(Objects::nonNull)                 
+      251 +                    .map(this::convertToResponse)             
+      252 +                    .collect(Collectors.toList());            
+      253 +        } catch (IllegalStateException e) {                   
+      254 +            log.warn("获取执行顺序失败: {}", e.getMessage()); 
+      255 +            throw e;                                          
+      256          }                                                     
+      257 -                                                              
+      258 -        // 构建邻接表和入度                                   
+      259 -        for (WorkflowConnectionEntity conn : connections) {   
+      260 -            adjList.get(conn.getSourceNodeId()).add(conn.getT 
+          -argetNodeId());                                               
+      261 -            inDegree.merge(conn.getTargetNodeId(), 1,         
+          -Integer::sum);                                                
+      262 -        }                                                     
+      263 -                                                              
+      264 -        // 找到入度为0的节点                                  
+      265 -        Queue<Long> queue = new LinkedList<>();               
+      266 -        for (Map.Entry<Long, Integer> entry :                 
+          -inDegree.entrySet()) {                                        
+      267 -            if (entry.getValue() == 0) {                      
+      268 -                queue.add(entry.getKey());                    
+      269 -            }                                                 
+      270 -        }                                                     
+      271 -                                                              
+      272 -        List<NodeResponse> result = new ArrayList<>();        
+      273 -        while (!queue.isEmpty()) {                            
+      274 -            Long nodeId = queue.poll();                       
+      275 -                                                              
+          -result.add(convertToResponse(idToNodeMap.get(nodeId)));       
+      276 -                                                              
+      277 -            for (Long nextNodeId : adjList.get(nodeId)) {     
+      278 -                int newDegree = inDegree.get(nextNodeId) - 1; 
+      279 -                inDegree.put(nextNodeId, newDegree);          
+      280 -                if (newDegree == 0) {                         
+      281 -                    queue.add(nextNodeId);                    
+      282 -                }                                             
+      283 -            }                                                 
+      284 -        }                                                     
+      285 -                                                              
+      286 -        // 如果结果数量不等于节点数量，说明存在循环           
+      287 -        if (result.size() != nodes.size()) {                  
+      288 -            throw new IllegalStateException("工作流中存在循环 
+          -依赖，无法确定执行顺序");                                     
+      289 -        }                                                     
+      290 -                                                              
+      291 -        return result;                                        
+      257      }                                                         
+      258                                                                
+      259      // ========== 私有方法 ==========                         
+      260                                                                
+      261      /**                                                       
+      262 -     * 验证节点的参数引用                                     
+      262 +     * 构建前置节点映射（BFS）                                
+      263       */                                                       
+      264 -    private void                                              
+          -validateParameterReferences(WorkflowNodeEntity node,          
+      265 -                                              Map<String,     
+          -WorkflowNodeEntity> nameToNodeMap,                            
+      266 -                                                              
+          -List<ValidationResult.ValidationError> errors,                
+      267 -                                                              
+          -List<ValidationResult.ValidationWarning> warnings) {          
+      268 -        String inputParams = node.getInputParams();           
+      269 -        if (inputParams == null || inputParams.isEmpty()) {   
+      270 -            return;                                           
+      264 +    private Map<Long, Set<Long>> buildPredecessorsMap(        
+      265 +            List<WorkflowNodeEntity> nodes,                   
+      266 +            List<WorkflowConnectionEntity> connections) {     
+      267 +                                                              
+      268 +        Map<Long, Set<Long>> predecessorsMap = new            
+          +HashMap<>();                                                  
+      269 +                                                              
+      270 +        // 构建邻接表（反向）                                 
+      271 +        Map<Long, List<Long>> reverseAdj = new HashMap<>();   
+      272 +        for (WorkflowConnectionEntity conn : connections) {   
+      273 +                                                              
+          +reverseAdj.computeIfAbsent(conn.getTargetNodeId(), k -> new   
+          +ArrayList<>())                                                
+      274 +                    .add(conn.getSourceNodeId());             
+      275          }                                                     
+      276                                                                
+      277 -        try {                                                 
+      278 -            JsonNode paramsNode =                             
+          -objectMapper.readTree(inputParams);                           
+      279 -            if (paramsNode.isArray()) {                       
+      280 -                for (JsonNode param : paramsNode) {           
+      281 -                    if (param.has("value")) {                 
+      282 -                        String value =                        
+          -param.get("value").asText();                                  
+      283 -                        Matcher matcher =                     
+          -PARAM_REFERENCE_PATTERN.matcher(value);                       
+      284 -                        if (matcher.matches()) {              
+      285 -                            String refNodeName =              
+          -matcher.group(1);                                             
+      286 -                            String refParamName =             
+          -matcher.group(2);                                             
+      277 +        // BFS 计算每个节点的所有前置节点                     
+      278 +        for (WorkflowNodeEntity node : nodes) {               
+      279 +            Set<Long> predecessors = new HashSet<>();         
+      280 +            Queue<Long> queue = new LinkedList<>();           
+      281 +            queue.add(node.getId());                          
+      282                                                                
+      283 -                            WorkflowNodeEntity refNode =      
+          -nameToNodeMap.get(refNodeName);                               
+      284 -                            if (refNode == null) {            
+      285 -                                                              
+          -errors.add(createError("INVALID_NODE_REFERENCE",              
+      286 -                                        "节点 '" +            
+          -node.getName() + "' 引用了不存在的节点 '" + refNodeName +     
+          -"'",                                                          
+      287 -                                        node.getNodeUuid(),   
+          -"inputParams"));                                              
+      288 -                            } else {                          
+      289 -                                // 检查引用的参数是否存在     
+      290 -                                if (!hasOutputParam(refNode,  
+          -refParamName)) {                                              
+      291 -                                                              
+          -errors.add(createError("INVALID_PARAM_REFERENCE",             
+      292 -                                            "节点 '" +        
+          -node.getName() + "' 引用了节点 '" + refNodeName + "'          
+          -不存在的参数 '" + refParamName + "'",                         
+      293 -                                                              
+          -node.getNodeUuid(), "inputParams"));                          
+      294 -                                }                             
+      295 -                            }                                 
+      283 +            while (!queue.isEmpty()) {                        
+      284 +                Long current = queue.poll();                  
+      285 +                List<Long> sources = reverseAdj.get(current); 
+      286 +                if (sources != null) {                        
+      287 +                    for (Long source : sources) {             
+      288 +                        if (predecessors.add(source)) {       
+      289 +                            queue.add(source);                
+      290                          }                                     
+      291                      }                                         
+      292                  }                                             
+      293              }                                                 
+      294 -        } catch (Exception e) {                               
+      295 -            log.warn("解析输入参数失败: nodeUuid={}",         
+          -node.getNodeUuid(), e);                                       
+      294 +            predecessorsMap.put(node.getId(), predecessors);  
+      295          }                                                     
+      296 +                                                              
+      297 +        return predecessorsMap;                               
+      298      }                                                         
+      299                                                                
+      300      /**                                                       
+      301 +     * 提取参数引用                                           
+      302 +     */                                                       
+      303 +    private Set<String> extractParamReferences(String         
+          +inputParams) {                                                
+      304 +        Set<String> references = new HashSet<>();             
+      305 +        Matcher matcher =                                     
+          +PARAM_REFERENCE_PATTERN.matcher(inputParams);                 
+      306 +        while (matcher.find()) {                              
+      307 +            references.add(matcher.group(1));                 
+      308 +        }                                                     
+      309 +        return references;                                    
+      310 +    }                                                         
+      311 +                                                              
+      312 +    /**                                                       
+      313       * 检查节点是否有指定的输出参数                           
+      314       */                                                       
+      315      private boolean hasOutputParam(WorkflowNodeEntity node,   
+           String paramName) {                                           
+     ...
+      362      }                                                         
+      363                                                                
+      364      /**                                                       
+      365 -     * 检查是否有循环                                         
+      366 -     */                                                       
+      367 -    private boolean hasCycle(List<WorkflowNodeEntity> nodes,  
+          -List<WorkflowConnectionEntity> connections) {                 
+      368 -        try {                                                 
+      369 -            getExecutionOrderInternal(nodes, connections);    
+      370 -            return false;                                     
+      371 -        } catch (Exception e) {                               
+      372 -            return true;                                      
+      373 -        }                                                     
+      374 -    }                                                         
+      375 -                                                              
+      376 -    /**                                                       
+      377 -     * 内部拓扑排序方法                                       
+      378 -     */                                                       
+      379 -    private List<Long>                                        
+          -getExecutionOrderInternal(List<WorkflowNodeEntity> nodes,     
+          -List<WorkflowConnectionEntity> connections) {                 
+      380 -        Map<Long, Integer> inDegree = new HashMap<>();        
+      381 -        Map<Long, List<Long>> adjList = new HashMap<>();      
+      382 -                                                              
+      383 -        for (WorkflowNodeEntity node : nodes) {               
+      384 -            inDegree.put(node.getId(), 0);                    
+      385 -            adjList.put(node.getId(), new ArrayList<>());     
+      386 -        }                                                     
+      387 -                                                              
+      388 -        for (WorkflowConnectionEntity conn : connections) {   
+      389 -            adjList.get(conn.getSourceNodeId()).add(conn.getT 
+          -argetNodeId());                                               
+      390 -            inDegree.merge(conn.getTargetNodeId(), 1,         
+          -Integer::sum);                                                
+      391 -        }                                                     
+      392 -                                                              
+      393 -        Queue<Long> queue = new LinkedList<>();               
+      394 -        for (Map.Entry<Long, Integer> entry :                 
+          -inDegree.entrySet()) {                                        
+      395 -            if (entry.getValue() == 0) {                      
+      396 -                queue.add(entry.getKey());                    
+      397 -            }                                                 
+      398 -        }                                                     
+      399 -                                                              
+      400 -        List<Long> result = new ArrayList<>();                
+      401 -        while (!queue.isEmpty()) {                            
+      402 -            Long nodeId = queue.poll();                       
+      403 -            result.add(nodeId);                               
+      404 -                                                              
+      405 -            for (Long nextNodeId : adjList.get(nodeId)) {     
+      406 -                int newDegree = inDegree.get(nextNodeId) - 1; 
+      407 -                inDegree.put(nextNodeId, newDegree);          
+      408 -                if (newDegree == 0) {                         
+      409 -                    queue.add(nextNodeId);                    
+      410 -                }                                             
+      411 -            }                                                 
+      412 -        }                                                     
+      413 -                                                              
+      414 -        if (result.size() != nodes.size()) {                  
+      415 -            throw new IllegalStateException("存在循环依赖");  
+      416 -        }                                                     
+      417 -                                                              
+      418 -        return result;                                        
+      419 -    }                                                         
+      420 -                                                              
+      421 -    /**                                                       
+      422 -     * 创建错误对象                                           
+      423 -     */                                                       
+      424 -    private ValidationResult.ValidationError                  
+          -createError(String code, String message, String nodeUuid,     
+          -String field) {                                               
+      425 -        ValidationResult.ValidationError error = new          
+          -ValidationResult.ValidationError();                           
+      426 -        error.setCode(code);                                  
+      427 -        error.setMessage(message);                            
+      428 -        error.setNodeUuid(nodeUuid);                          
+      429 -        error.setField(field);                                
+      430 -        return error;                                         
+      431 -    }                                                         
+      432 -                                                              
+      433 -    /**                                                       
+      434 -     * 创建警告对象                                           
+      435 -     */                                                       
+      436 -    private ValidationResult.ValidationWarning                
+          -createWarning(String code, String message, String nodeUuid) { 
+      437 -        ValidationResult.ValidationWarning warning = new      
+          -ValidationResult.ValidationWarning();                         
+      438 -        warning.setCode(code);                                
+      439 -        warning.setMessage(message);                          
+      440 -        warning.setNodeUuid(nodeUuid);                        
+      441 -        return warning;                                       
+      442 -    }                                                         
+      443 -                                                              
+      444 -    /**                                                       
+      365       * 转换为响应DTO                                          
+      366       */                                                       
+      367      private NodeResponse convertToResponse(WorkflowNodeEntity 
+            entity) {                                                    
+
+  Read 1 file (ctrl+o to expand)
+
+● 编译验证。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -60)
+  ⎿  (No output)
+
+● Phase 4 验证逻辑实现完成！
+
+  完成内容总结
+
+  1. 更新 ValidationResult DTO
+
+  - 添加 addError(code, message, nodeUuid, field) 方法
+  - 添加 addWarning(code, message, nodeUuid) 方法
+  - 添加 merge(other) 方法用于合并验证结果
+  - 初始化 errors 和 warnings 列表
+
+  2. 创建 StructureValidator（结构验证器）
+
+  验证规则：
+
+  ┌────────────┬──────────────────┐
+  │   错误码   │       说明       │
+  ├────────────┼──────────────────┤
+  │ WF_STR_001 │ 缺少开始节点     │
+  ├────────────┼──────────────────┤
+  │ WF_STR_002 │ 存在多个开始节点 │
+  ├────────────┼──────────────────┤
+  │ WF_STR_003 │ 缺少结束节点     │
+  ├────────────┼──────────────────┤
+  │ WF_STR_004 │ 存在多个结束节点 │
+  ├────────────┼──────────────────┤
+  │ WF_STR_005 │ 孤立节点警告     │
+  ├────────────┼──────────────────┤
+  │ WF_STR_006 │ 开始节点有入边   │
+  ├────────────┼──────────────────┤
+  │ WF_STR_007 │ 结束节点有出边   │
+  └────────────┴──────────────────┘
+
+  3. 创建 CyclicDependencyValidator（循环依赖检测器）
+
+  - 使用 Kahn 算法 检测有向图中的环
+  - validate() - 验证是否存在循环依赖
+  - getTopologicalOrder() - 获取节点名称的拓扑排序
+  - getTopologicalOrderByIds() - 获取节点ID的拓扑排序
+  - hasCycle() - 快速判断是否存在循环
+
+  4. 创建 SkillCompatibilityChecker（Skill 兼容性检查器）
+
+  验证规则：
+
+  ┌──────────────┬────────────────┬────────────────────┐
+  │    错误码    │      说明      │     兼容性状态     │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_001 │ Skill 不存在   │ INVALID            │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_002 │ Skill 已禁用   │ INCOMPATIBLE       │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_003 │ 缺少必填参数   │ NEEDS_UPDATE       │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_004 │ 参数类型不匹配 │ NEEDS_UPDATE       │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_005 │ Skill 版本变更 │ COMPATIBLE（警告） │
+  ├──────────────┼────────────────┼────────────────────┤
+  │ WF_SKILL_006 │ Skill 未配置   │ INVALID            │
+  └──────────────┴────────────────┴────────────────────┘
+
+  5. 重构 WorkflowValidationServiceImpl
+
+  协调各验证器组件：
+  validate()
+  ├── StructureValidator.validate()      // 结构验证
+  ├── CyclicDependencyValidator.validate() // 循环依赖检测
+  ├── validateParameterReferences()        // 参数引用验证
+  └── SkillCompatibilityChecker.check()   // Skill 兼容性检查
+
+  验证器架构
+
+  com.example.demo.workflow.service.validation/
+  ├── StructureValidator.java          // 结构验证
+  ├── CyclicDependencyValidator.java   // 循环依赖检测
+  └── SkillCompatibilityChecker.java  // Skill 兼容性检查
+
+  编译验证通过，可以进入 Phase 5 事件集成。
+
+✻ Cogitated for 7m 57s
+
+> 开始实施阶段5开发任务                                                         
+
+● 好的，开始实施 Phase 5 事件集成。
+
+  Read 1 file (ctrl+o to expand)
+
+● Bash(mkdir -p "C:\Users\Administrator\Desktop\workspace\ai-application-test-ba
+      ckend\src\main\java\com\example\demo\workflow\event")
+  ⎿  Done
+
+● Write(src\main\java\com\example\demo\workflow\event\SkillChangeEvent.java)
+  ⎿  Wrote 177 lines to
+     src\main\java\com\example\demo\workflow\event\SkillChangeEvent.java
+     package com.example.demo.workflow.event;
+
+     import lombok.Builder;
+     import lombok.Data;
+     import lombok.Getter;
+     import org.springframework.context.ApplicationEvent;
+
+     import java.time.LocalDateTime;
+     import java.util.List;
+
+     … +167 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\event\SkillChangeListener.java)
+  ⎿  Wrote 252 lines to
+     src\main\java\com\example\demo\workflow\event\SkillChangeListener.java
+     package com.example.demo.workflow.event;
+
+     import com.example.demo.workflow.entity.CompatibilityStatus;
+     import com.example.demo.workflow.entity.WorkflowNodeEntity;
+     import com.example.demo.workflow.mapper.WorkflowNodeMapper;
+     import com.example.demo.workflow.service.validation.SkillCompatibility
+     Checker;
+     import lombok.RequiredArgsConstructor;
+     import lombok.extern.slf4j.Slf4j;
+     import org.springframework.scheduling.annotation.Async;
+     import org.springframework.stereotype.Component;
+
+     … +242 lines (ctrl+o to expand)
+
+● Write(src\main\java\com\example\demo\workflow\config\AsyncConfig.java)
+  ⎿  Wrote 100 lines to
+     src\main\java\com\example\demo\workflow\config\AsyncConfig.java
+     package com.example.demo.workflow.config;
+
+     import lombok.extern.slf4j.Slf4j;
+     import org.springframework.context.annotation.Bean;
+     import org.springframework.context.annotation.Configuration;
+     import org.springframework.scheduling.annotation.EnableAsync;
+     import
+     org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+     import java.util.concurrent.Executor;
+     import java.util.concurrent.ThreadPoolExecutor;
+     … +90 lines (ctrl+o to expand)
+
+  Read 2 files (ctrl+o to expand)
+
+● 编译验证。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -50)
+  ⎿  [ERROR] COMPILATION ERROR :
+     [ERROR] /C:/Users/Administrator/Desktop/workspace/ai-application-test-
+     backend/src/main/java/com/example/demo/workflow/event/SkillChangeListe
+     … +32 lines (ctrl+o to expand)
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\event\SkillChangeListener.java)
+  ⎿  Added 1 line
+      1  package com.example.demo.workflow.event;                        
+      2                                                                  
+      3 +import com.example.demo.workflow.dto.ValidationResult;          
+      4  import com.example.demo.workflow.entity.CompatibilityStatus;    
+      5  import com.example.demo.workflow.entity.WorkflowNodeEntity;     
+      6  import com.example.demo.workflow.mapper.WorkflowNodeMapper;     
+
+● Update(src\main\java\com\example\demo\workflow\event\SkillChangeListener.java)
+  ⎿  Added 2 lines, removed 1 line
+      103          for (WorkflowNodeEntity node : nodes) {               
+      104              try {                                             
+      105                  // 执行兼容性检查                             
+      106 -                CompatibilityStatus status =                  
+          -skillChecker.checkNode(node);                                 
+      106 +                ValidationResult nodeResult = new             
+          +ValidationResult();                                           
+      107 +                CompatibilityStatus status =                  
+          +skillChecker.checkNode(node, nodeResult);                     
+      108                                                                
+      109                  // 更新节点状态                               
+      110                  node.setCompatibilityStatus(status.name());   
+
+● Update(src\main\java\com\example\demo\workflow\event\SkillChangeListener.java)
+  ⎿  Added 2 lines, removed 1 line
+      185          int needsUpdateCount = 0;                             
+      186                                                                
+      187          for (WorkflowNodeEntity node : nodes) {               
+      188 -            CompatibilityStatus status =                      
+          -skillChecker.checkNode(node);                                 
+      188 +            ValidationResult nodeResult = new                 
+          +ValidationResult();                                           
+      189 +            CompatibilityStatus status =                      
+          +skillChecker.checkNode(node, nodeResult);                     
+      190              node.setCompatibilityStatus(status.name());       
+      191              nodeMapper.updateById(node);                      
+      192                                                                
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main\java\com\example\demo\workflow\event\SkillChangeListener.java)
+  ⎿  Error editing file
+
+  Read 2 files (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+> continue                                                                      
+
+● 继续完成 Phase 5 编译验证。
+
+● Bash(cd "C:\Users\Administrator\Desktop\workspace\ai-application-test-backend"
+       && ./mvnw compile -q 2>&1 | head -50)
+  ⎿  (No output)
+  ⎿  (timeout 2m)
+  ⎿  1 skill available
+
+● 编译成功！
+
+● Phase 5 事件集成完成！
+
+  完成内容总结
+
+  1. 创建 SkillChangeEvent（事件类）
+
+  - 变更类型枚举 ChangeType：CREATED, UPDATED, DISABLED, ENABLED, DELETED,
+  VERSION_UPGRADED
+  - Skill 快照 SkillSnapshot：记录变更前后的 Skill 状态
+  - 参数定义 ParamDefinition：记录参数信息
+
+  2. 创建 SkillChangeListener（事件监听器）
+
+  监听 Skill 变更事件并处理：
+
+  ┌──────────────────────────┬─────────────────────────────────┐
+  │         变更类型         │            处理逻辑             │
+  ├──────────────────────────┼─────────────────────────────────┤
+  │ CREATED                  │ 无需处理                        │
+  ├──────────────────────────┼─────────────────────────────────┤
+  │ UPDATED/VERSION_UPGRADED │ 检查兼容性并更新节点状态        │
+  ├──────────────────────────┼─────────────────────────────────┤
+  │ ENABLED                  │ 重新检查兼容性                  │
+  ├──────────────────────────┼─────────────────────────────────┤
+  │ DISABLED                 │ 标记所有相关节点为 INCOMPATIBLE │
+  ├──────────────────────────┼─────────────────────────────────┤
+  │ DELETED                  │ 标记所有相关节点为 INVALID      │
+  └──────────────────────────┴─────────────────────────────────┘
+
+  3. 创建 AsyncConfig（异步配置）
+
+  - workflowTaskExecutor - 处理 Skill 变更事件
+  - workflowValidationExecutor - 处理工作流验证任务
+
+  4. Mapper 方法补充
+
+  已在 Phase 4 完成：
+  - selectBySkillId - 按 Skill ID 查询节点
+  - batchUpdateCompatibilityStatus - 批量更新兼容性状态
+
+  事件流程
+
+  SkillService
+      │
+      └── 发布 SkillChangeEvent
+              │
+              ▼
+      SkillChangeListener (@Async)
+              │
+              ├── 查询使用该 Skill 的节点
+              │
+              └── SkillCompatibilityChecker.checkNode()
+                      │
+                      └── 更新节点 compatibilityStatus
+
+  ---
+  🎉 工作流配置层重构 - 全部5个阶段完成！
+
+  ┌─────────┬─────────────────────────────────────────┬─────────┐
+  │  阶段   │                主要内容                 │  状态   │
+  ├─────────┼─────────────────────────────────────────┼─────────┤
+  │ Phase 1 │ 基础层更新（Entity、DTO、Mapper、枚举） │ ✅ 完成 │
+  ├─────────┼─────────────────────────────────────────┼─────────┤
+  │ Phase 2 │ 服务层重构（4个Service接口+实现）       │ ✅ 完成 │
+  ├─────────┼─────────────────────────────────────────┼─────────┤
+  │ Phase 3 │ 控制器层重构（4个Controller）           │ ✅ 完成 │
+  ├─────────┼─────────────────────────────────────────┼─────────┤
+  │ Phase 4 │ 验证逻辑实现（3个验证器+重构）          │ ✅ 完成 │
+  ├─────────┼─────────────────────────────────────────┼─────────┤
+  │ Phase 5 │ 事件集成（SkillChangeEvent+Listener）   │ ✅ 完成 │
+  └─────────┴─────────────────────────────────────────┴─────────┘
+
+  新建文件汇总（约44个文件）
+
+  - 枚举类: 4个
+  - 实体类更新: 4个
+  - DTO类: 12个
+  - Mapper接口: 1个新增方法
+  - Mapper XML: 4个更新
+  - 服务接口: 4个
+  - 服务实现: 4个
+  - 控制器: 4个
+  - 验证器: 3个
+  - 事件类: 2个
+  - 配置类: 1个
+
+✻ Sautéed for 1m 23s
